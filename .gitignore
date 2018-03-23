@@ -1,6 +1,6 @@
 /node_modules
-/public/*
-/public/.git
+# /public/*
+# /public/.git
 !/public/*.json
 /storage/*.key
 /vendor
