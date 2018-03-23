@@ -1,4 +1,5 @@
 /node_modules
+!/public/*.json
 /public
 /storage/*.key
 /vendor
@@ -14,4 +15,3 @@ yarn-error.log
 /webpack.mix.js
 *.json
 /resources/assets
-!/public/*.json
