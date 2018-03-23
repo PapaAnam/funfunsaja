@@ -1,6 +1,7 @@
 /node_modules
+/public/*
+/public/.git
 !/public/*.json
-# /public
 /storage/*.key
 /vendor
 /.idea
