@@ -5,6 +5,7 @@
 		<div class="col-lg-9">
 			@include('home.slider')
 			<br>
+			@if(!Auth::check())
 			<div class="row">
 				<div class="col-md-6 offset-md-3 d-lg-none">
 					<br>
@@ -14,6 +15,7 @@
 					<br>	
 				</div>
 			</div>
+			@endif
 			@include('home.about')
 			<br>
 			<br>
