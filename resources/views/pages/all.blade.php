@@ -8,7 +8,7 @@
 			<hr>
 		</div>
 		<div class="col-lg-3 col-md-6">
-			@component('select', ['id' => 'category', 'label' => 'Kategori'])
+			@component('select', ['id' => 'category', 'label' => 'Kategori', 'size' => 'sm'])
 			<option value="all">All</option>
 			@foreach ($categories as $c)
 			<option {{ $cat == $c->url ? 'selected' : '' }} value="{{ $c->url }}">{{ $c->name }}</option>
@@ -26,9 +26,9 @@
 			@foreach ($data as $a)
 			<div class="card">
 				<div class="card-body">
-					<a class="text-dark" style="text-decoration: none;" href="{{ url('pages/'.$url.'/'.$a->url) }}"><h5>{{ $a->title }}</h5></a>
+					<a class="text-dark" style="text-decoration: none;" href="{{ $a->link }}"><h5>{{ $a->title }}</h5></a>
 					<i class="fa fa-clock-o"></i> {{ $a->crat }}
-					<i class="fa fa-tags"></i> {{ $a->tags }}
+					<i class="fa fa-tags"></i> @include('pages.tag-link')
 					<hr>
 					<div>
 						<img class="pull-left mr-3" style="max-width: 200px;" src="{{ $a->thumb }}" alt="{{ $a->title }}">
@@ -70,3 +70,5 @@
 	})
 </script>
 @endpush
+
+@include('contents.override-pagination')

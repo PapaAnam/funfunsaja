@@ -135,4 +135,10 @@ class Content extends Model
         return $q->where('status', 'published');
     }
 
+    public function scopeWithCommentCount($q)
+    {
+        $q->withCount(['comments' => function($k){
+            $k->where('status', '1');
+        }]);
+    }
 }

@@ -12,7 +12,7 @@
 				<div class="card-body">
 					<h5>{{ $page->title }}</h5>
 					<i class="fa fa-clock-o"></i> {{ $page->crat }}
-					<i class="fa fa-tags"></i> {{ $page->tags }}
+					<i class="fa fa-tags"></i> @include('pages.tag-link', ['a'	=> $page])
 					<hr>
 					<div align="center">
 						<img style="max-width: 300px;" src="{{ $page->thumb }}" alt="{{ $page->title }}">

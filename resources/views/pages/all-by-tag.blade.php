@@ -1,14 +1,14 @@
-@extends('layouts.app', ['title' => $modul])
+@extends('layouts.app', ['title' => 'Halaman'])
 @section('content')
 <br>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h4>{{ $modul }}</h4>
+			<h4>Halaman</h4>
 			<hr>
-			<div class="row">
+			{{-- <div class="row">
 				<div class="col-lg-3 col-md-6">
-					@component('select', ['id' => 'user', 'label' => 'User', 'size'	=> 'sm'])
+					@component('select', ['id' => 'user', 'label' => 'User'])
 					<option value="all">All</option>
 					@foreach ($users as $u)
 					<option @if($u) {{ $user == $u ? 'selected' : '' }} @endif value="{{ $u }}">{{ $u }}</option>
@@ -16,7 +16,7 @@
 					@endcomponent
 				</div>
 				<div class="col-lg-3 col-md-6">
-					@component('select', ['id' => 'category', 'label' => 'Kategori', 'size'	=> 'sm'])
+					@component('select', ['id' => 'category', 'label' => 'Kategori'])
 					<option value="all">All</option>
 					@foreach ($categories as $c)
 					<option {{ $cat == $c->url ? 'selected' : '' }} value="{{ $c->url }}">{{ $c->name }}</option>
@@ -24,19 +24,24 @@
 					@endcomponent
 				</div>
 				@include('contents.search-form')
-			</div>
+			</div> --}}
 		</div>
 		<div class="col-lg-9 col-md-12">
-			@if(request()->query('keyword'))
+			<div class="alert alert-info">
+			Menampilkan halaman dengan tag <strong>{{ $tag }}</strong>
+			</div>
+			{{-- @if(request()->query('keyword'))
 			<div class="alert alert-info">
 				Menampilkan hasil pencarian dengan kata kunci <strong>{{ request()->query('keyword') }}</strong>
 			</div>
-			@endif
-			@if(count($data) > 0)
-			@foreach ($data as $a)
+			@endif --}}
+			@if(count($pages) > 0)
+			@foreach ($pages as $a)
 			<div class="card">
 				<div class="card-body">
-					@include('contents.header', ['a' => $a])
+					<a class="text-dark" style="text-decoration: none;" href="{{ $a->link }}"><h5>{{ $a->title }}</h5></a>
+					<i class="fa fa-clock-o"></i> {{ $a->crat }}
+					<i class="fa fa-tags"></i> @include('pages.tag-link')
 					<hr>
 					<div>
 						<img class="pull-left mr-3" style="max-width: 200px;" src="{{ $a->thumb }}" alt="{{ $a->title }}">
@@ -46,32 +51,26 @@
 				</div>
 				<div class="card-footer">
 					<div class="text-right text-muted">
-						<i class="fa fa-superpowers"></i> {{ $a->type == '0' ? 'Free' : 'Premium' }} &nbsp;&nbsp;
-						<i class="fa fa-comments"></i> {{ $a->comments_count }} &nbsp;&nbsp;
 						<i class="fa fa-eye"></i> {{ $a->hit }} &nbsp;&nbsp;
-						@if($a->cat)
-						<a class="text-muted" href="{{ url('contents/'.$url.'?cat='.$a->cat->url) }}">
-							<i class="fa fa-cube"></i> {{ $a->cat->name }}
-						</a>
-						@endif
+						<a class="text-muted" href="{{ url(str_replace('//', '/', 'pages/'.$a->kind->path.'?cat='.$a->cat->url)) }}"><i class="fa fa-cube"></i> {{ $a->cat->name }}</a>
 					</div>
 				</div>
 			</div>
 			<br>
 			@endforeach
-			{{ $data->appends(['keyword' => request()->query('keyword')])->links() }}
+			{{ $pages->appends(['keyword' => request()->query('keyword')])->links() }}
 			@else
 			<div class="alert alert-danger">
 				Mohon maaf konten tidak ditemukan
 			</div>
 			@endif
 		</div>
-		@include('contents.right-menu')
+		@include('pages.right-menu')
 	</div>
 </div>
 @endsection
 
-@push('script')
+{{-- @push('script')
 <script>	
 	$('#user').on('change', function(e){
 		var user = $(this).val()
@@ -92,6 +91,5 @@
 		@endif
 	})
 </script>
-@endpush
-
+@endpush --}}
 @include('contents.override-pagination')

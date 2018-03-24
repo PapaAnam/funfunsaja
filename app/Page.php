@@ -64,11 +64,16 @@ class Page extends Model
 
     public function getLinkAttribute()
     {
-        return route('pages.detail', [$this->kind->path, $this->url]);
+        return url(str_replace('//', '/', '/pages'.$this->kind->path.'/'.$this->url));
     }
 
     public function getDibuatPadaAttribute()
     {
         return waktuIndo($this->created_at);
+    }
+
+    public function scopePublished($q)
+    {
+        return $q->where('status', '1');
     }
 }

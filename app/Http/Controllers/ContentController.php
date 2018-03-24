@@ -284,4 +284,26 @@ class ContentController extends Controller
 		];
 		return view('contents.success', $oper);
 	}
+
+	public function withCategory($cat)
+	{
+		if(Kategori::where('url', 'like', '%'.$cat.'%')->count()){
+			$c = Kategori::where('url', 'like', '%'.$cat.'%')->first();
+			$contents = Content::with('kind', 'user')->withCommentCount()->published()->where('category_id', $c->id)->latest()->paginate(10);
+			return view('contents.all-by-category', [
+				'contents'	=> $contents,
+				'cat'		=> $c->name,
+			]+$this->getRightMenu());
+		}
+		abort(404);
+	}
+
+	public function withTag($tag)
+	{
+		$contents = Content::with('kind', 'user', 'cat')->withCommentCount()->published()->where('tags', 'like', '%'.$tag.'%')->latest()->paginate(10);
+		return view('contents.all-by-tag', [
+			'contents'	=> $contents,
+			'tag'		=> $tag,
+		]+$this->getRightMenu());
+	}
 }

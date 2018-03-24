@@ -12,8 +12,6 @@ use DB;
 class PageController extends Controller
 {
 
-	
-
 	private function getRightMenu()
 	{
 		$pk = PageKind::withCount(['pages' => function($q){
@@ -33,9 +31,9 @@ class PageController extends Controller
 
 	public function all($page_kind_url, Request $r)
 	{
-		$pk = PageKind::where('url', '/pages/'.$page_kind_url)->first();
-		$pages = $pk->pages()->with('cat')->where('status', '1');
-		$cat = 'all';
+		$pk 	= PageKind::where('path', 'like', '%'.$page_kind_url.'%')->first();
+		$pages 	= $pk->pages()->with('cat')->where('status', '1');
+		$cat 	= 'all';
 		if($r->query('cat') && $r->query('cat') != 'all'){
 			$cat_id = Kategori::where('url', $r->query('cat'))->first()->id;
 			$pages = $pages->where('category_id', $cat_id);
@@ -59,7 +57,7 @@ class PageController extends Controller
 
 	public function detail($pk_url, $url)
 	{
-		$pk = PageKind::whereUrl('/pages/'.$pk_url)->first();
+		$pk = PageKind::where('path', 'like', '%'.$pk_url.'%')->first();
 		if(!$pk)
 			abort(404);
 		$page = Page::where('url', $url)->where('page_kind_id', $pk->id)->first();
@@ -74,5 +72,14 @@ class PageController extends Controller
 			return view('pages.detail', $oper);
 		}
 		return abort(404);
+	}
+
+	public function withTag($tag)
+	{
+		$pages = Page::with('kind')->published()->where('tags', 'like', '%'.$tag.'%')->latest()->paginate(10);
+		return view('pages.all-by-tag', [
+			'pages'		=> $pages,
+			'tag'		=> $tag,
+		]+$this->getRightMenu());
 	}
 }

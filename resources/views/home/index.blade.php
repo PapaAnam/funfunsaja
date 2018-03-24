@@ -41,11 +41,12 @@
 			<ul class="list-group">
 				<li class="bg-danger text-white list-group-item d-flex justify-content-between align-items-center">Kategori</li>
 				@foreach ($categories as $c)
-				<li class="list-group-item pb-2 pt-2 d-flex justify-content-between align-items-center">
-					<a class="text-muted" href="{{ url('contents/articles/?cat='.$c->url) }}">
-						<i class="fa fa-arrow-right"></i>&nbsp;&nbsp; {{ $c->name }}
+				<li class="list-group-item pb-2 pt-2 text-danger border-danger">
+					<i class="fa fa-arrow-right mr-2"></i>
+					<a class="text-danger" href="{{ url('contents/with-category/'.$c->url) }}">
+						{{ $c->name }}
 					</a>
-					<span class="badge badge-danger badge-pill">{{ $c->contents_count }}</span>
+					<span class="float-right badge badge-danger badge-pill">{{ $c->contents_count }}</span>
 				</li>
 				@endforeach
 			</ul>

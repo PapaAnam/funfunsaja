@@ -11,7 +11,7 @@
 			<div class="card">
 				<div class="card-body">
 					<h5>{{ $content->title }}</h5>
-					<i class="fa fa-user"></i> {{ $content->user->username }} 
+					<i class="fa fa-user"></i> <a class="text-dark" href="{{ url('/profile/'.$content->user->username) }}">{{ $content->user->username }}</a>
 					<i class="fa fa-clock-o"></i> {{ $content->crat }}
 					<i class="fa fa-tags"></i> {{ $content->tags }}
 					<hr>

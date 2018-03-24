@@ -45,6 +45,8 @@ Route::get('/login', 'AutentikasiController@loginForm')->name('user_login');
 
 Route::group(['prefix' => 'contents'], function(){
 	Route::get('/', 'ContentController@contents');
+	Route::get('/with-category/{category}', 'ContentController@withCategory');
+	Route::get('/with-tag/{tag}', 'ContentController@withTag');
 	Route::get('/{content_kind}', 'ContentController@all')->name('contents');
 	Route::get('/{content_kind}/{content}', 'ContentController@detail')
 	->middleware('content')
@@ -52,6 +54,7 @@ Route::group(['prefix' => 'contents'], function(){
 });
 
 Route::group(['prefix' => 'pages'], function(){
+	Route::get('/with-tag/{tag}', 'PageController@withTag');
 	Route::get('/{page_kind}', 'PageController@all');
 	Route::get('/{page_kind}/{url}', 'PageController@detail')->name('pages.detail');
 });

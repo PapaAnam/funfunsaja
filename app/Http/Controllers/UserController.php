@@ -90,9 +90,19 @@ class UserController extends Controller
 		return 'Profil berhasil diperbarui';
 	}
 
-	public function editPass()
+	public function editPass(Request $r)
 	{
-		return view('user_profile.edit_pass');
+		return view('user_profile.edit_pass', $this->useroper($r));
+	}
+
+	private function useroper($r)
+	{
+		$user = $r->user();
+		$oper = [
+			'user'	=> $user,
+			'contents_count'	=> Content::where('user_id', $user->id)->published()->count(),
+		]+$this->getRightMenu();
+		return $oper;
 	}
 
 	public function updatePass(UpdatePassword $r)
@@ -120,12 +130,7 @@ class UserController extends Controller
 
 	public function editEmail(Request $r)
 	{
-		$user = $r->user();
-		$oper = [
-			'user'	=> $user,
-			'contents_count'	=> Content::where('user_id', $user->id)->published()->count(),
-		]+$this->getRightMenu();
-		return view('user_profile.edit_email', $oper);
+		return view('user_profile.edit_email', $this->useroper($r));
 	}
 
 	public function updateEmail(UpdateEmail $r)
