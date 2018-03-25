@@ -12,9 +12,9 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 		Route::namespace('User')->group(function(){
 			Route::get('/bank-account', 'BankAccountController@index');
 			Route::get('/bank-account/edit', 'BankAccountController@edit');
+			Route::get('/edit-phone-number', 'PhoneNumberController@index');
 		});
 		Route::get('/edit-email', 'UserController@editEmail');
-		Route::get('/edit-phone-number', 'UserController@editPhoneNumber');
 		Route::get('/edit-password', 'UserController@editPass');
 	});
 

@@ -253,32 +253,6 @@ class UserController extends Controller
 		return $r->name.' berhasil diperbarui';
 	}
 
-	public function updatePhoneNumber(Request $r)
-	{
-		$token = config('wira.phone_token');
-		$r->validate([
-			'phone_number' => 'numeric|unique:user'
-		]);
-		$user = $r->user();
-		$email = $user->email;
-		$user->update([
-			'token_number' => $token,
-			'verification_url' => config('wira.verif_url'),
-			'last_time_to_verify' => date('Y-m-d H:i:s', strtotime('+2 hours')),
-			'phone_number' => $r->phone_number,
-			'status' => '0',
-		]);
-		if(app()->environment() != 'local')
-			event(new UserCreated($user));
-
-		$r->user()->activities()->create([
-			'title'		=> 'Profil',
-			'content'	=> 'Memperbarui no hp',
-		]);
-		Auth::logout();
-		return 'No Hp berhasil diubah. Tautan verifikasi sudah dikirim ke '.$email.' dan token ke '.$r->phone_number.' untuk verifikasi ulang';
-	}
-
 	public function updateAvatar(Request $r)
 	{
 		$r->validate([
