@@ -10,15 +10,31 @@
 			</div>
 			@endif
 			<h4>Profil Saya</h4>
-			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="data-tab" data-toggle="pill" href="#data" role="tab" aria-controls="data" aria-selected="true">Edit</a>
-				</li>
-			</ul>
+			<hr>
 			<a href="{{ url('user-profile') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
-			<div class="tab-content" id="pills-tabContent">
-				<div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
-					<my-profile-edit :data="{{ $user }}"></my-profile-edit>
+			<div class="card">
+				<div class="card-body">
+					<form id="edit-user-profile">
+						<div class="row">
+							<div class="col-md-6">
+								<inp label="Username" type="text" value="{{ $user['username'] }}" id="username"></inp>
+							</div>
+							<div class="col-md-6">
+								<inp id="web" type="text" label="Situs Web" value="{{ $user['web'] }}"></inp>
+							</div>
+							<div class="col-md-12">
+								@component('my-note', [
+									'id'	=> 'description', 
+									'label' => 'Deskripsikan Tentang Anda', 
+									'value' => $user['description']
+								])
+								@endcomponent
+							</div>
+							<div class="col-md-12">
+								<update-profile></update-profile>
+							</div>
+						</div>	
+					</form>
 				</div>
 			</div>
 		</div>
@@ -27,10 +43,10 @@
 @endsection
 
 @push('js')
-	<script src="{{ asset('vendors/summernote/dist/summernote-bs4.min.js') }}"></script>
-	<script src="{{ asset('vendors/js/notify.min.js') }}"></script>
+<script src="{{ asset('vendors/js/notify.min.js') }}"></script>
+{{-- <script src="{{ asset('vendors/summernote/dist/summernote-lite.js') }}"></script> --}}
 @endpush
 
 @push('css')
-	<link rel="stylesheet" href="{{ asset('vendors/summernote/dist/summernote-bs4.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('vendors/summernote/dist/summernote-lite.css') }}"> --}}
 @endpush

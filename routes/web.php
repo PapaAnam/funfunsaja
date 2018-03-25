@@ -60,6 +60,7 @@ Route::group(['prefix' => 'pages'], function(){
 });
 
 Route::group(['prefix' => 'feedback'], function(){
+	Route::get('/with-tag/{tag}', 'FeedbackController@withTag');
 	Route::get('/{feedback_kind}', 'FeedbackController@all');
 	Route::get('/{feedback_kind}/{feedback}', 'FeedbackController@detail')->name('feedback.detail');
 });

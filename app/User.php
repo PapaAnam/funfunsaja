@@ -171,6 +171,6 @@ class User extends Authenticatable
 
     public function getTerakhirLoginAttribute()
     {
-        return tglIndo($this->last_login);
+        return preg_match('[valid]', tglIndo($this->last_login)) ? 'Belum Pernah' : tglIndo($this->last_login);
     }
 }

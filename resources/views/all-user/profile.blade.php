@@ -1,10 +1,10 @@
-@extends('layouts.app', ['title' => 'Profil User'])
+@extends('layouts.app', ['title' => isset($title) ? $title : 'Profil User'])
 @section('content')
 <br>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h4>Profil User</h4>
+			<h4> {{ isset($title) ? $title : 'Profil User' }}</h4>
 			<hr>
 		</div>
 		<div class="col-lg-9 col-md-12">
@@ -13,12 +13,7 @@
 			</button>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="mb-2 img-thumbnail" style="max-width: 200px; max-height: 200px;" src="{{ $user->avatar }}" alt="{{ $user->username }}">
-				</div>
-				<div class="col-md-8">
-					{!! $user->description !!}
-				</div>
-				<div class="col-md-4">
+					<img class="mb-2 img-thumbnail rounded-circle" style="max-width: 180px; max-height: 180px;" src="{{ $user->avatar }}" alt="{{ $user->username }}">
 					<button class="btn btn-outline-danger btn-block">
 						Status
 						@if($user->status === '0')
@@ -41,7 +36,7 @@
 						Poin
 						{{ $user->point }}
 					</button>
-					<button class="btn btn-outline-danger btn-block">
+					<button class="btn btn-outline-danger btn-block mb-5">
 						Total Konten
 						{{ $contents_count }}
 					</button>

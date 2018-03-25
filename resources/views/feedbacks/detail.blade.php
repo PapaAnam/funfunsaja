@@ -10,10 +10,7 @@
 		<div class="col-md-9">
 			<div class="card">
 				<div class="card-body">
-					<h5>{{ $feedback->title }}</h5>
-					<i class="fa fa-user"></i> {{ $feedback->user->username }} 
-					<i class="fa fa-clock-o"></i> {{ $feedback->crat }}
-					<i class="fa fa-tags"></i> {{ implode(', ', $feedback->tags) }}
+					@include('feedbacks.header', ['a'=>$feedback])
 					<hr>
 					<div align="center">
 						<img style="max-width: 300px;" src="{{ $feedback->thumb }}" alt="{{ $feedback->title }}">

@@ -10,7 +10,7 @@ class Feedback extends Model
     protected $guarded = [];
     protected $table = 'feedbacks';
 
-    protected $appends = ['short_title', 'crat', 'thumb', 'username', 'short_content', 'avatar', 'dibuat_pada'];
+    protected $appends = ['short_title', 'crat', 'thumb', 'username', 'short_content', 'avatar', 'dibuat_pada', 'full_url'];
 
     protected $casts = [
         'tags' => 'array'
@@ -104,6 +104,23 @@ class Feedback extends Model
     public function getLinkAttribute()
     {
         return route('feedback.detail', [$this->kind->path, $this->url]);
+    }
+
+    public function getFullUrlAttribute()
+    {
+        return url(str_replace('//', '/', '/feedback/'.$this->kind->path.'/'.$this->url));
+    }
+
+    public function scopeWithCommentCount($q)
+    {
+        $q->withCount(['comments' => function($k){
+            $k->where('status', '1');
+        }]);
+    }
+
+    public function scopePublished($q)
+    {
+        return $q->where('status', 'published');
     }
 
 }

@@ -27,9 +27,9 @@ class FeedbacksTableSeeder extends Seeder
                 foreach(range(1, $faker->numberBetween(1, 10)) as $a){
                     $content .= $faker->text(1000)."<br> ";
                 }
-                $tags = '';
+                $tags = [];
                 foreach(range(1, $faker->randomDigit) as $a){
-                    $tags .= $faker->word.",";
+                    $tags[] = $faker->word;
                 }
                 $date       = $faker->dateTimeBetween('-1 years');
                 $data[] = [
@@ -38,7 +38,7 @@ class FeedbacksTableSeeder extends Seeder
                     "feedback_kind_id"   => $faker->randomElement($ck),
                     "content"            => $content,
                     "thumbnail"          => 'path/to/thumbnail',
-                    "tags"               => $tags,
+                    "tags"               => json_encode($tags),
                     "created_at"         => $date,
                     "updated_at"         => $date,
                     "user_id"            => $user,

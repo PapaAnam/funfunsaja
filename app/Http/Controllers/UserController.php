@@ -41,21 +41,21 @@ class UserController extends Controller
 		$user2 = collect($user->only('username', 'description', 'web', 'email', 'phone_number', 'id', 'avatar'));
 		// dd($user2);
 		return [
-			'user' => $user2,
-			'pass_is_same' => Hash::check($user->token_number, $user->password),
-			'my_bank' => $bank,
-			'my_bio' => $bio,
-			'provinces' => Province::where('IDProvinsi', '!=', '0')->orderBy('Nama')->get(),
-			'cities' => $bio ? City::where('IDProvinsi', $bio->province_id)->orderBy('Nama')->get(): json_encode([]),
-			'regions' => $bio ? Region::where('IDKabupaten', $bio->city_id)->orderBy('Nama')->get(): json_encode([]),
-			'villages' => $bio ? Village::where('IDKecamatan', $bio->region_id)->orderBy('Nama')->get(): json_encode([]),
-			'biodata' => $biodata,
-			'biography' => $biography,
-			'skills' => $skills,
-			'passions' => $passions,
-			'hobbies' => $hobbies,
-			'languages' => $languages,
-			'characters' => $characters,
+			'user' 			=> $user2,
+			'pass_is_same' 	=> Hash::check($user->token_number, $user->password),
+			'my_bank' 		=> $bank,
+			'my_bio' 		=> $bio,
+			'provinces' 	=> Province::where('IDProvinsi', '!=', '0')->orderBy('Nama')->get(),
+			'cities' 		=> $bio ? City::where('IDProvinsi', $bio->province_id)->orderBy('Nama')->get(): json_encode([]),
+			'regions' 		=> $bio ? Region::where('IDKabupaten', $bio->city_id)->orderBy('Nama')->get(): json_encode([]),
+			'villages' 		=> $bio ? Village::where('IDKecamatan', $bio->region_id)->orderBy('Nama')->get(): json_encode([]),
+			'biodata' 		=> $biodata,
+			'biography' 	=> $biography,
+			'skills' 		=> $skills,
+			'passions' 		=> $passions,
+			'hobbies' 		=> $hobbies,
+			'languages' 	=> $languages,
+			'characters' 	=> $characters,
 		];
 	}
 
@@ -70,7 +70,12 @@ class UserController extends Controller
 		// return view('user_profile.view', $oper);
 	}
 
-	public function edit()
+	public function other(Request $r)
+	{
+		return view('user_profile.other', $this->oper($r));
+	}
+
+	public function edit(Request $r)
 	{
 		$user = Auth::user();
 		$oper = [
@@ -95,7 +100,7 @@ class UserController extends Controller
 		return view('user_profile.edit_pass', $this->useroper($r));
 	}
 
-	private function useroper($r)
+	protected function useroper($r)
 	{
 		$user = $r->user();
 		$oper = [

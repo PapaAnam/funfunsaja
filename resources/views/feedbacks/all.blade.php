@@ -13,10 +13,7 @@
 			@foreach ($data as $a)
 			<div class="card">
 				<div class="card-body">
-					<a class="text-dark" style="text-decoration: none;" href="{{ $a->link }}"><h5>{{ $a->title }}</h5></a>
-					<i class="fa fa-user"></i> {{ $a->user->username }} 
-					<i class="fa fa-clock-o"></i> {{ $a->crat }}
-					<i class="fa fa-tags"></i> {{ implode(', ', $a->tags) }}
+					@include('feedbacks.header')
 					<hr>
 					<div>
 						<img class="pull-left mr-3" style="max-width: 200px;" src="{{ $a->thumb }}" alt="{{ $a->title }}">
@@ -44,3 +41,5 @@
 	</div>
 </div>
 @endsection
+
+@include('override-pagination')

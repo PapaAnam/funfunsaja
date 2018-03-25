@@ -1,4 +1,4 @@
-{{-- @extends('layouts.app', ['title' => 'Profil Saya'])
+@extends('layouts.app', ['title' => 'Profil Saya'])
 @section('content')
 <br>
 <div class="container">
@@ -16,12 +16,9 @@
 			@endif
 			<h4>Profil Saya</h4>
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link {{ !session('active') ? 'active' : '' }}" id="data-tab" data-toggle="pill" href="#data" role="tab" aria-controls="data" aria-selected="true">Profil</a>
-				</li>
 				@if(Auth::id() == $user['id'])
 				<li class="nav-item">
-					<a class="nav-link {{ session('active') == 'bank' ? 'active' : '' }}" id="bank-tab" data-toggle="pill" href="#bank" role="tab" aria-controls="bank" aria-selected="true">Rekening</a>
+					<a class="nav-link {{ session('active') == 'bank' ? 'active' : 'active' }}" id="bank-tab" data-toggle="pill" href="#bank" role="tab" aria-controls="bank" aria-selected="true">Rekening</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link {{ session('active') == 'bio' ? 'active' : '' }}" id="bio-tab" data-toggle="pill" href="#bio" role="tab" aria-controls="bio" aria-selected="true">Data Diri</a>
@@ -41,11 +38,8 @@
 				@endif
 			</ul>
 			<div class="tab-content" id="pills-tabContent">
-				<div class="tab-pane fade show {{ !session('active') ? 'active' : '' }}" id="data" role="tabpanel" aria-labelledby="data-tab">
-					<my-profile :data="{{ $user }}"></my-profile>
-				</div>
 				@if(Auth::id() == $user['id'])
-				<div class="tab-pane fade show {{ session('active') == 'bank' ? 'active' : '' }}" id="bank" role="tabpanel" aria-labelledby="bank-tab">
+				<div class="tab-pane fade show {{ session('active') == 'bank' ? 'active' : 'active' }}" id="bank" role="tabpanel" aria-labelledby="bank-tab">
 					<my-bank :data="{{ $my_bank ? $my_bank : json_encode([]) }}"></my-bank>
 				</div>
 				<div class="tab-pane fade show {{ session('active') == 'bio' ? 'active' : '' }}" id="bio" role="tabpanel" aria-labelledby="bio-tab">
@@ -79,26 +73,4 @@
 @endpush
 
 @component('snote')
-@endcomponent --}}
-
-
-{{-- @extends('all-user.') --}}
-
-
-@extends('all-user.profile')
-@section('profile')
-{!! $user->description !!}
-<hr>
-<strong>Daftar Konten Dibuat</strong>
-@if(count($contents) > 0)
-<ul>
-	@foreach ($contents as $c)
-	<li><a href="{{ $c->full_url }}">{{ $c->title }}</a></li>
-	@endforeach
-</ul>
-@else
-<div class="mt-2 alert alert-danger">
-	Belum ada
-</div>
-@endif
-@endsection
+@endcomponent

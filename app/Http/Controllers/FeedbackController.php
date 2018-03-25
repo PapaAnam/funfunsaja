@@ -147,7 +147,7 @@ class FeedbackController extends Controller
     public function all($feedback_kind_url, Request $r)
     {
         // DB::enableQueryLog();
-        $ck = FeedbackKind::where('path', 'like', '%'.$feedback_kind_url.'%')->first();
+        $ck = FeedBackKind::where('path', 'like', '%'.$feedback_kind_url.'%')->first();
         // dd($ck);
         $feedback = [];
         $user = 'all';
@@ -199,7 +199,7 @@ class FeedbackController extends Controller
 
     public function detail($feedback_kind_url, Feedback $feedback)
     {
-        $ck = FeedbackKind::whereUrl('/feedback/'.$feedback_kind_url)->first();
+        $ck = FeedbackKind::where('path', 'like', '%'.$feedback_kind_url.'%')->first();
         if(!$ck)
             abort(404);
         if(!$feedback)
@@ -217,5 +217,14 @@ class FeedbackController extends Controller
             return view('feedbacks.detail', $oper);
         }
         return abort(404);
+    }
+
+    public function withTag($tag)
+    {
+        $feedbacks = Feedback::with('kind', 'user')->withCommentCount()->published()->where('tags', 'like', '%'.$tag.'%')->latest()->paginate(10);
+        return view('feedbacks.all-by-tag', [
+            'feedbacks'     => $feedbacks,
+            'tag'           => $tag,
+        ]+$this->getRightMenu());
     }
 }
