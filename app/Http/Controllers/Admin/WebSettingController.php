@@ -24,25 +24,24 @@ class WebSettingController extends Controller
 
 	public function update(Request $r)
 	{
-		// return $r->all();
 		$r->validate([
-			'address' => 'required',
-			'city' => 'required',
-			'email' => 'required|email',
-			'logo_title' => 'required',
-			'phone_number' => 'required',
-			'post_code' => 'required',
-			'seo_author' => 'required',
-			'seo_description' => 'required',
-			'seo_keyword' => 'required',
-			'state' => 'required',
-			'title' => 'required',
-			'favicon' => 'nullable|file|mimes:ico|max:500',
-			'logo' => 'nullable|file|mimes:png,jpeg|max:1000',
+			'address' 			=> 'required',
+			'province'			=> 'required',
+			'city' 				=> 'required',
+			'email' 			=> 'required|email',
+			'logo_title' 		=> 'required',
+			'phone_number' 		=> 'required',
+			'post_code' 		=> 'required',
+			'seo_author' 		=> 'required',
+			'seo_description' 	=> 'required',
+			'seo_keyword' 		=> 'required',
+			'state' 			=> 'required',
+			'title' 			=> 'required',
+			'favicon' 			=> 'nullable|file|mimes:ico|max:500',
+			'logo' 				=> 'nullable|file|mimes:png,jpeg|max:1000',
 		]);
 		$data = [];
 		$s = collect(json_decode(Setting::where('key', 'web')->first()->value));
-		// dd($s);
 		if($r->file('favicon')){
 			Storage::deleteDirectory('public/favicon');
 			$data['favicon'] = str_replace('public/', '', $r->file('favicon')->store('public/favicon'));
@@ -62,4 +61,10 @@ class WebSettingController extends Controller
 		]);
 		return 'Pengaturan web berhasil diperbarui';
 	}
+
+	public function logo()
+	{
+		return $this->api()['logo'];
+	}
+
 }

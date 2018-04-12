@@ -25,6 +25,9 @@
 		</div>
 		<div class="col-lg-3 col-md-6 col-sm-6 text-light">
 			<h4 class="text-light">Contact Us</h4>
+			<i class="fa fa-map-marker"></i> Kota : {{ $_web->city.', '.$_web->province }}
+			<br>
+			<br>
 			<i class="fa fa-map-marker"></i> Address : {{ $_web->address }}
 			<br>
 			<br>

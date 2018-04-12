@@ -1,5 +1,8 @@
 <?php
 
+# GET LOGO
+Route::get('/logo', 'Admin\WebSettingController@logo');
+
 Route::post('/upload-snote', 'SummernoteController');
 
 Route::get('/menu-setting/font-type', 'Admin\MenuController@fontType');
