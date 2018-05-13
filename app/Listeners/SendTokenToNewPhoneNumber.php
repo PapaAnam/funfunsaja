@@ -20,10 +20,11 @@ class SendTokenToNewPhoneNumber
     {
         $curl = curl_init(config('sms.api'));
         curl_setopt($curl, CURLOPT_POST, 1);
+        $sms = Setting::sms();
         curl_setopt($curl, CURLOPT_POSTFIELDS, [
-            'email'     => config('sms.email'),
-            'password'  => config('sms.password'),
-            'device'    => config('sms.device'),
+            'email'     => $sms->SMS_ME_EMAIL,
+            'password'  => $sms->SMS_ME_PASSWORD,
+            'device'    => $sms->SMS_ME_DEVICE,
             'number'    => $recipient,
             'name'      => 'Aktivasi Akun',
             'message'   => $msg

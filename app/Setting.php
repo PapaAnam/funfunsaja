@@ -103,4 +103,17 @@ class Setting extends Model
 			'value'	=> json_encode($data)
 		]);
 	}
+
+	public function scopeSms($q)
+	{
+		return collect(json_decode($q->firstOrCreate([
+			'key'		=> 'sms'
+		], [
+			'value'		=> json_encode([
+				'SMS_ME_EMAIL'		=> 'funzy.com@gmail.com',
+				'SMS_ME_PASSWORD'	=> 'Jogja021214',
+				'SMS_ME_DEVICE'		=> '79605',
+			]),
+		])->value));
+	}
 }
