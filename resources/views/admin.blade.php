@@ -9,6 +9,7 @@
     <meta name="description" content="{{ $_web->seo_description }}" />
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <meta name="base-url" id="base-url" content="{{ config('app.url') }}">
+    <meta name="base-router" content="{{ config('app.base_router') }}">
     <link rel="shortcut icon" href="{{ $_web->favicon }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @if(config('app.env') != 'local')
@@ -24,6 +25,13 @@
     <link rel="stylesheet" href="{{ asset('vendors/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset(mix('css/admin.css')) }}">
+    <style>
+    .wira-footer {
+        background-image: url('{{ url('images/footer.png') }}');
+        z-index: 3;
+        color: white;
+        padding: 2.5rem;
+    }
 </style>
 </head>
 <body>

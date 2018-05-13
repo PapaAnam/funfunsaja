@@ -160,3 +160,9 @@ Route::prefix('feedback-comments')->group(function(){
 	Route::put('/publish/{comment}', 'FeedbackCommentController@publish');
 	Route::put('/reject/{comment}', 'FeedbackCommentController@reject');
 });
+
+# SETTING 
+Route::prefix('setting')->group(function(){
+	Route::get('/sms', 'SmsSettingController@index');
+	Route::put('/sms/update', 'SmsSettingController@update');
+});

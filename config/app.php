@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'lifetime'  => env('USER_LIFETIME', 1),
+    'base_router'   => env('BASE_ROUTER', '/admin-menu/'),
 
     /*
     |--------------------------------------------------------------------------
