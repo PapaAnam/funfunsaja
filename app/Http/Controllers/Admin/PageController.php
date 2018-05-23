@@ -40,15 +40,21 @@ class PageController extends Controller
 			$data['thumbnail'] = str_replace('public/', '', $thumb->store('public/pages/thumbnail'));
 		}
 		$data['url'] = str_slug($r->title);
-		foreach($r->tags as $t){
+		$tags = $r->tags;
+		if(!is_array($tags)){
+			$tags = explode(',', $tags);
+		}
+		foreach($tags as $t){
 			Tag::updateOrCreate([
 				'name' => $t
 			], [
 				'url' => str_slug($t)
 			]);
 		}
-		$data['tags'] = $r->tags ? implode(',', $r->tags) : null;
-		Page::create($data+$r->all());
+		$data['category_id'] = $r->category;
+		$data['page_kind_id']		= $r->page_kind;
+		$data['tags'] = is_array($tags) ? implode(',', $tags) : $tags;
+		Page::create($data+$r->except('category', 'page_kind'));
 		return $r->status == '1' ? 'Halaman berhasil dipublish.' : 'Halaman berhasil dimasukkan ke draft';
 	}
 
