@@ -24,10 +24,12 @@ class StorePage extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:pages|string|min:10',
-            'content' => 'required|string|min:300',
+            'title'         => 'required|unique:pages|string|min:10',
+            'content'       => 'required|string|min:300',
             // 'thumbnail' => 'required|mimes:jpeg,png|file|max:1000',
-            'tags' => 'required'
+            'tags'          => 'required',
+            'category'      => 'required',
+            'page_kind'     => 'required',
         ];
     }
 }

@@ -177,7 +177,9 @@ return [
         'favicon' => 'Favicon',
         'logo' => 'Logo',
         'seo_author' => 'SEO Author',
-        'description' => 'Deskripsi'
+        'description' => 'Deskripsi',
+        'category'  => 'Kategori',
+        'page_kind' => 'Jenis Halaman'
     ],
 
 ];
