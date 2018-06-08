@@ -27,8 +27,10 @@
 					<br>
 				</div>
 			</div>
+			@include('sosmed')
 		</div>
 		@include('pages.right-menu')
 	</div>
 </div>
 @endsection
+@include('import.ayoshare')

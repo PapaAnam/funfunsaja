@@ -1,4 +1,4 @@
-<div class="container-fluid bg-dark p-5 wira-footer">
+<div class="container-fluid bg-dark p-5" style="background-image: url('{{ url('images/footer.png')  }}');">
 	<div class="row">
 		<div class="col-lg-3 col-md-6 col-sm-6">
 			<h4 class="text-light">Mobile First</h4>

@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http;
-
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
 class Kernel extends HttpKernel
 {
     /**
@@ -19,9 +16,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
-        // \App\Http\Middleware\Cors::class,
     ];
-
     /**
      * The application's route middleware groups.
      *
@@ -36,9 +31,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            // \Barryvdh\Cors\HandleCors::class,
         ],
-
         'web_custom' => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
@@ -46,13 +39,11 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
         'api' => [
             'throttle:60,1',
             'bindings',
         ],
     ];
-
     /**
      * The application's route middleware.
      *
@@ -62,19 +53,21 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'user' => \App\Http\Middleware\CompleteUser::class,
+        'content' => \App\Http\Middleware\ContentMiddleware::class,
+        'must_logout' => \App\Http\Middleware\MustLogout::class,
         'user_auth' => \App\Http\Middleware\AuthenticateUser::class,
         'complete_bio' => \App\Http\Middleware\CompleteBio::class,
         'complete_biodata' => \App\Http\Middleware\CompleteBioData::class,
         'complete_biography' => \App\Http\Middleware\CompleteBiography::class,
         'complete_bank_account' => \App\Http\Middleware\CompleteBankAccount::class,
         'admin' => \App\Http\Middleware\CustomGuard::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'user' => \App\Http\Middleware\CompleteUser::class,
-        'content' => \App\Http\Middleware\ContentMiddleware::class,
-        'must_logout' => \App\Http\Middleware\MustLogout::class,
     ];
 }
