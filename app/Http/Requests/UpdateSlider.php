@@ -26,7 +26,7 @@ class UpdateSlider extends FormRequest
         return [
             'image' => 'nullable|file|max:2000|mimes:jpeg,png',
             'content' => 'required|string',
-            'url' => 'required'
+            // 'url' => 'required'
         ];
     }
 
