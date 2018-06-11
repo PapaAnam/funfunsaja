@@ -15,4 +15,4 @@ yarn-error.log
 /webpack.mix.js
 *.json
 /resources/assets
-!composer.json
+composer.lock

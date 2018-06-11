@@ -58,7 +58,8 @@ Route::group(['prefix' => 'sliders'], function(){
 
 # PAGES
 Route::group(['prefix' => 'pages'], function(){
-	apiRoute('PageController');
+	Route::get('/today', 'PageController@today');
+	Route::get('/{year}/{month}', 'PageController@filter');
 	Route::get('/{id}', 'PageController@single');
 	Route::post('/store', 'PageController@store');
 	Route::put('/update/{id}', 'PageController@update');
@@ -117,7 +118,8 @@ Route::put('point-setting', 'SettingController@updatePoint');
 
 # PEROLEHAN POIN
 Route::prefix('points')->group(function(){
-	apiRoute('PointController');
+	Route::get('/today', 'PointController@today');
+	Route::get('/{year}/{month}', 'PointController@filter');
 });
 
 # MODERASI KONTEN
@@ -129,11 +131,13 @@ Route::prefix('contents')->group(function(){
 
 # AKTIVITAS MODERASI
 Route::prefix('moderate-activities')->group(function(){
-	apiRoute('ModerateActivityController');
+	Route::get('/today', 'ModerateActivityController@today');
+	Route::get('/{year}/{month}', 'ModerateActivityController@filter');
 });
 
 Route::prefix('activities')->group(function(){
-	apiRoute('ActivityController');
+	Route::get('/today', 'ActivityController@today');
+	Route::get('/{year}/{month}', 'ActivityController@filter');
 });
 
 # UPGRADE MEMBER SETTING
@@ -141,7 +145,8 @@ Route::put('/upgrade-member-setting', 'SettingController@updateUpMember');
 
 # DEPOSIT CLAIMS
 Route::prefix('depo-claims')->group(function(){
-	apiRoute('DepositClaimController');
+	Route::get('/today', 'DepositClaimController@today');
+	Route::get('/{year}/{month}', 'DepositClaimController@filter');
 	Route::put('/verify/{depo}', 'DepositController@claimVerify');
 });
 

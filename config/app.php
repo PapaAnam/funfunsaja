@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Jakarta',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'ind',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -233,6 +233,7 @@ return [
         'Konfigurasi' => App\Konfigurasi::class,
         'MenuUtama' => App\MenuUtama::class,
         'Menu' => App\Menu::class,
+
     ],
 
 ];
