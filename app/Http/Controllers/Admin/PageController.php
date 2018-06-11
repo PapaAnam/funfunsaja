@@ -84,14 +84,15 @@ class PageController extends Controller
 			$data['thumbnail'] = str_replace('public/', '', $thumb->store('public/pages/thumbnail'));
 		}
 		$data['url'] = str_slug($r->title);
-		foreach($r->tags as $t){
+		$tags = is_string($r->tags) ? explode(',', $r->tags) : $r->tags;
+		foreach($tags as $t){
 			Tag::updateOrCreate([
 				'name' => $t
 			], [
 				'url' => str_slug($t)
 			]);
 		}
-		$data['tags'] = $r->tags ? implode(',', $r->tags) : null;
+		$data['tags'] = implode(',', $tags);
 		$page->update($data+$r->only(['title', 'content', 'page_kind_id', 'category_id', 'status']));
 		return $r->status == '1' ? 'Halaman berhasil dipublish.' : 'Halaman berhasil dimasukkan ke draft';
 	}
