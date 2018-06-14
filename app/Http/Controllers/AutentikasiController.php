@@ -161,6 +161,9 @@ class AutentikasiController extends Controller
 			'title'		=> 'Keluar',
 			'content'	=> 'Keluar dari website'
 		]);
+		Auth::user()->update([
+			'logged_in'	=> '0'
+		]);
 		Auth::logout();
 		if($r->ajax)
 			return response('Anda berhasil keluar');
