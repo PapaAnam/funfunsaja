@@ -1,6 +1,9 @@
 @extends('layouts.app', ['title' => 'Edit Konten'])
 @section('content')
 @component('content', ['judul' => 'Ubah Konten'])
+<a href="{{ route('my_content') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
+<br>
+<br>
 <contents-edit :data="{{ $data }}" :tags="{{ $tags }}" :content-kinds="{{ $contentKinds }}" :categories="{{ $categories }}"></contents-edit>
 @endcomponent
 @endsection

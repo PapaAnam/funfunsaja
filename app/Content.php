@@ -8,7 +8,7 @@ use Storage;
 class Content extends Model
 {
     protected $guarded = [];
-    protected $appends = ['short_title', 'crat', 'thumb', 'full_url', 'short_content', 'dibuat_pada', 'link', 'cat_url', 'is_draft', 'is_rejected', 'is_published', 'is_waiting'];
+    protected $appends = ['short_title', 'crat', 'thumb', 'full_url', 'short_content', 'dibuat_pada', 'link', 'cat_url', 'is_draft', 'is_rejected', 'is_published', 'is_waiting', 'type_name'];
 
     public function user()
     {
@@ -140,5 +140,10 @@ class Content extends Model
         $q->withCount(['comments' => function($k){
             $k->where('status', '1');
         }]);
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return $this->type == 1 ? 'Premium' : 'Free';
     }
 }

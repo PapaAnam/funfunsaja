@@ -54,9 +54,14 @@ class FeedbackController extends Controller
                 )
             );
         }
-        Tag::cr($r);
+        $tags = is_string($r->tags) ? explode(',', $r->tags) : $r->tags;
+        foreach ($tags as $t) {
+            Tag::updateOrCreate([
+                'name' => $t
+            ]);
+        }
         $data['url'] = str_slug($r->title);
-        $data['tags'] = $r->tags;
+        $data['tags'] = $tags;
         $data['user_id'] = Auth::id();
         $feedback = FeedBack::create($data+$r->only(['title', 'feedback_kind_id', 'content', 'status']));
         if($r->status === 'waiting')

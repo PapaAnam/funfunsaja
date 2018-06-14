@@ -39,6 +39,7 @@
 			</tags>
 		</div>
 		<update-feedback old-title="{{ $data->title }}" url="{{ $data->url }}" my-feedbacks="{{ route('my_feedbacks') }}"></update-feedback>
+		<textarea id="isi_feedback" style="display: none;">{!! $data->content !!}</textarea>
 	</div>	
 </form>
 @endcomponent
@@ -58,6 +59,7 @@
 
 @push('script')
 <script>
-	$('#content').summernote('code', '{!! $data->content !!}')
+	var isi = $('#isi_feedback').val();
+	$('#content').summernote('code', isi);
 </script>
 @endpush

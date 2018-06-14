@@ -13,6 +13,7 @@
 				<th width="10px">#</th>
 				<th>Judul</th>
 				<th>Jenis</th>
+				<th>Tipe</th>
 				<th>Status</th>
 				<th>Dibuat Pada</th>
 				<th>Tanggapan</th>
@@ -25,6 +26,7 @@
 				<td>{{ $i++ }}</td>
 				<td>{{ $d->short_title }}</td>
 				<td>{{ $d->kind->name }}</td>
+				<td>{{ $d->type_name }}</td>
 				<td>
 					@if($d->status == 'draft')
 					<span class="badge badge-secondary">Draft</span>

@@ -25,6 +25,7 @@
 					<br>
 				</div>
 			</div>
+			@include('sosmed')
 			<h4 class="mt-5">Tanggapan</h4>
 			<hr>
 			@if($feedback->comments_count > 0)
@@ -50,3 +51,5 @@
 
 @component('snote')
 @endcomponent
+
+@include('import.ayoshare')
