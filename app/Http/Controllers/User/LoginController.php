@@ -20,6 +20,9 @@ class LoginController extends Controller
 		if($exist){
 			$existAndActive = $usr->status == '1';
 			if($existAndActive){
+				if($usr->logged_in == 1){
+					return response('logged_in', 422);
+				}
 				if(Auth::guard()->attempt([
 					'email' => $r->email,
 					'password' => $r->password
@@ -27,7 +30,8 @@ class LoginController extends Controller
 					$ress=array(
 						'wrong_login' 	=> '0',
 						'last_login'	=> now(),
-						'must_logout'	=> date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days'))
+						'must_logout'	=> date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days')),
+						'logged_in'		=> '1',
 					);
 					User::where('email', $r->email)->update($ress);
 					session([

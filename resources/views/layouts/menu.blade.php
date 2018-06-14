@@ -19,16 +19,16 @@
 @endif
 @endforeach --}}
 <li>
-	<a style="color: white;" class="{{ $_font_type }}" href="{{ config('app.url', 'http://funzy.id') }}"><i class="fa fa-home"></i> Beranda</a>
+	<a class="{{ $_font_type }}" href="{{ config('app.url', 'http://funzy.id') }}"><i class="fa fa-home"></i> Beranda</a>
 </li>
 <li>
-	<a style="color: white;" href="" class="dropdown-toggle {{ $_font_type }}">
+	<a href="" class="dropdown-toggle {{ $_font_type }}">
 		Konten
 	</a>
 	<ul class="d-menu" data-role="dropdown">
 		@foreach ($_ck as $c)
 		<li>
-			<a style="color: white;" class="{{ $_font_type }}" href="{{ url('/contents'.$c->path) }}">{{ $c->name }}</a>
+			<a class="{{ $_font_type }}" href="{{ url('/contents'.$c->path) }}">{{ $c->name }}</a>
 		</li>
 		@endforeach
 	</ul>
@@ -40,23 +40,23 @@
 	<ul class="d-menu" data-role="dropdown">
 		@foreach ($_pk as $c)
 		<li>
-			<a style="color: white;" class="{{ $_font_type }}" href="{{ url('/pages'.$c->path) }}">{{ $c->name }}</a>
+			<a class="{{ $_font_type }}" href="{{ url('/pages'.$c->path) }}">{{ $c->name }}</a>
 		</li>
 		@endforeach
 	</ul>
 </li>
 <li>
-	<a style="color: white;" href="" class="dropdown-toggle {{ $_font_type }}">
+	<a href="" class="dropdown-toggle {{ $_font_type }}">
 		Masukan
 	</a>
 	<ul class="d-menu" data-role="dropdown">
 		@foreach ($_fk as $c)
 		<li>
-			<a style="color: white;" class="{{ $_font_type }}" href="{{ url('/feedback'.$c->path) }}">{{ $c->name }}</a>
+			<a class="{{ $_font_type }}" href="{{ url('/feedback'.$c->path) }}">{{ $c->name }}</a>
 		</li>
 		@endforeach
 	</ul>
 </li>
 <li>
-	<a style="color: white;" href="{{ url('/all-user') }}">Daftar User</a>
+	<a href="{{ url('/all-user') }}">Daftar User</a>
 </li>
