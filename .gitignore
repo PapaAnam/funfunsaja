@@ -1,6 +1,4 @@
 /node_modules
-/public
-!/public/*.json
 /storage/*.key
 /vendor
 /.idea
@@ -12,7 +10,7 @@ yarn-error.log
 .env
 *.bat
 /tests
-/webpack.mix.js
+webpack.mix.js
 *.json
 /resources/assets
 composer.lock
