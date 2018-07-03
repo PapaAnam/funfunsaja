@@ -11,6 +11,4 @@ yarn-error.log
 *.bat
 /tests
 webpack.mix.js
-*.json
 /resources/assets
-composer.lock
