@@ -30,10 +30,16 @@ class MustLogout
         }
         else{
             if(is_null($u->must_logout)){
+                Auth::user()->update([
+                    'logged_in' => '0'
+                ]);
                 Auth::logout();
                 return redirect('/')->with('msg', 'Sesi anda habis. Silakan masuk lagi untuk mengakses menu anda.');
             }
             if($u->must_logout <= date('Y-m-d H:i:s')){
+                Auth::user()->update([
+                    'logged_in' => '0'
+                ]);
                 Auth::logout();
                 return redirect('/')->with('msg', 'Sesi anda habis. Silakan masuk lagi untuk mengakses menu anda.');
             }
