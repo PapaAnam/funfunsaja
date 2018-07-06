@@ -8,9 +8,6 @@
 // 	new \App\Events\UserCreated(App\User::where('email', 'hairulanam21@gmail.com')->first());
 // });
 
-# ALL USERS
-Route::get('/all-user', 'ListUserController@index');
-
 # USER PROFILE TANPA LOGIN
 Route::get('/profile/{username}', 'ListUserController@profile');
 

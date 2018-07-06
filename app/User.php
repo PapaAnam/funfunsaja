@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login'];
+    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login', 'status_text'];
     protected $casts = [
         'is_premium'    => 'boolean'
     ];
@@ -172,5 +172,16 @@ class User extends Authenticatable
     public function getTerakhirLoginAttribute()
     {
         return preg_match('[valid]', tglIndo($this->last_login)) ? 'Belum Pernah' : tglIndo($this->last_login);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        if($this->status == 0){
+            return 'Menunggu verifikasi';
+        }elseif($this->status == 1){
+            return 'Aktif';
+        }else{
+            return 'Non aktif';
+        }
     }
 }

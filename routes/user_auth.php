@@ -2,6 +2,7 @@
 
 Route::post('/logout', 'AutentikasiController@logout')->name('user_logout');
 Route::get('/user-profile/edit', 'UserController@edit');
+Route::get('/all-user', 'ListUserController@index');
 
 Route::group(['middleware' => ['user', 'must_logout']], function(){
 	Route::group(['prefix' => 'user-profile'], function(){

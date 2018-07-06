@@ -57,6 +57,8 @@
 		@endforeach
 	</ul>
 </li>
+@if(Auth::check())
 <li>
 	<a href="{{ url('/all-user') }}">Daftar User</a>
 </li>
+@endif
