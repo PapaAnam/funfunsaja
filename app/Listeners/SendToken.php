@@ -58,9 +58,9 @@ class SendToken
         curl_setopt($curl, CURLOPT_POST, 1);
         $sms = Setting::sms();
         curl_setopt($curl, CURLOPT_POSTFIELDS, [
-            'email'     => $sms->SMS_ME_EMAIL,
-            'password'  => $sms->SMS_ME_PASSWORD,
-            'device'    => $sms->SMS_ME_DEVICE,
+            'email'     => $sms['SMS_ME_EMAIL'],
+            'password'  => $sms['SMS_ME_PASSWORD'],
+            'device'    => $sms['SMS_ME_DEVICE'],
             'number'    => $recipient,
             'name'      => 'Aktivasi Akun',
             'message'   => $msg

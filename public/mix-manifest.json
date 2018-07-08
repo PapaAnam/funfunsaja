@@ -1,11 +1,16 @@
 {
-    "/js/admin.js": "/js/admin.js",
-    "/js/wiranusa.js": "/js/wiranusa.js",
-    "/vendors/css/metro.css": "/vendors/css/metro.css",
-    "/vendors/css/metro-without-grid.css": "/vendors/css/metro-without-grid.css",
-    "/vendors/css/metro-schemes.css": "/vendors/css/metro-schemes.css",
-    "/vendors/css/metro-colors.css": "/vendors/css/metro-colors.css",
-    "/css/admin.css": "/css/admin.css",
-    "/vendors/js/metro.js": "/vendors/js/metro.js",
-    "/css/my-style.css": "/css/my-style.css"
+    "/js/admin.js": "/js/admin.js?id=d9f020afa1e62815728a",
+    "/js/wiranusa.js": "/js/wiranusa.js?id=c5be4dcbeaf8acae2df3",
+    "/vendors/css/metro.css": "/vendors/css/metro.css?id=c98c33569d3912cff12f",
+    "/vendors/css/metro-without-grid.css": "/vendors/css/metro-without-grid.css?id=c0dd28a46c2ad00a9375",
+    "/vendors/css/metro-schemes.css": "/vendors/css/metro-schemes.css?id=087c1804d8e5bca9a364",
+    "/vendors/css/metro-colors.css": "/vendors/css/metro-colors.css?id=15cb4add7fd9f9e94508",
+    "/css/admin.css": "/css/admin.css?id=bb263ea212f7b3438ecc",
+    "/js/vendor.js": "/js/vendor.js?id=0923ed791d32fbe4ba8f",
+    "/js/manifest.js": "/js/manifest.js?id=7999d63793f040b855fb",
+    "/vendors/js/metro.js": "/vendors/js/metro.js?id=c218e42ff5de4fba658f",
+    "/css/my-style.css": "/css/my-style.css?id=4e995d48a65bb2199030",
+    "/css/login.min.css": "/css/login.min.css?id=7e630d7cd3f4cea68035",
+    "/vendors/css/my-style.min.css": "/vendors/css/my-style.min.css?id=d41d8cd98f00b204e980",
+    "/css/my-style.min.css": "/css/my-style.min.css?id=4e995d48a65bb2199030"
 }
