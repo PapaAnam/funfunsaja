@@ -1,7 +1,7 @@
 <?php
 
 // Route::get('/hh', function(){
-	
+
 // });
 
 // Route::get('/send-fake-number', function(){
@@ -9,6 +9,9 @@
 // });
 
 # USER PROFILE TANPA LOGIN
+Route::get('/sms-setting', function(){
+	return \App\Setting::sms();
+});
 Route::get('/profile/{username}', 'ListUserController@profile');
 
 Route::get('/clear-sliders', 'Admin\SliderController@clear');
