@@ -10,6 +10,7 @@
 
 # USER PROFILE TANPA LOGIN
 Route::get('/sms-setting', function(){
+	return config('sms.api');
 	return \App\Setting::sms();
 });
 Route::get('/profile/{username}', 'ListUserController@profile');

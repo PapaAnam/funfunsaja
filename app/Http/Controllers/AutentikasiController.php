@@ -11,7 +11,7 @@ use App\User;
 use Auth;
 use Hash;
 use App\Activity;
-// use Route;
+use App\Setting;
 
 class AutentikasiController extends Controller
 {
