@@ -54,19 +54,28 @@ class SendToken
 
     private function smsMe($event, $recipient, $msg)
     {
-        $curl = curl_init(config('sms.api'));
-        curl_setopt($curl, CURLOPT_POST, 1);
         $sms = Setting::sms();
-        curl_setopt($curl, CURLOPT_POSTFIELDS, [
-            'email'     => $sms['SMS_ME_EMAIL'],
-            'password'  => $sms['SMS_ME_PASSWORD'],
-            'device'    => $sms['SMS_ME_DEVICE'],
-            'number'    => $recipient,
-            'name'      => 'Aktivasi Akun',
-            'message'   => $msg
-        ]);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $response = json_decode(curl_exec($curl));
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => config('sms.api'),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => "[  " . json_encode([
+                'phone_number'=>$recipient,
+                'message'=>$msg,
+                'device_id'=>$sms['SMS_ME_DEVICE']
+            ]) . "]",
+            CURLOPT_HTTPHEADER => array(
+                "authorization: ".config('sms.token'),
+                "cache-control: no-cache"
+            ),
+        ));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response = json_decode(curl_exec($curl),true);
         curl_close($curl);
     }
 }
