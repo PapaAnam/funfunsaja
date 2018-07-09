@@ -10,7 +10,7 @@
 
 # USER PROFILE TANPA LOGIN
 Route::get('/sms-setting', function(){
-	$sms = Setting::sms();
+	$sms = \App\Setting::sms();
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => config('sms.api'),
