@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-use App\Events\UpdatePhoneNumber;
+use App\Events\SendLinkAndSms;
 use Auth;
 
 class PhoneNumberController extends UserController
@@ -31,7 +31,7 @@ class PhoneNumberController extends UserController
 		]);
 		$user 	= $r->user();
 		if(app()->environment() != 'local')
-			event(new UpdatePhoneNumber($user));
+			event(new SendLinkAndSms('update_phone_number',$user));
 		$r->user()->activities()->create([
 			'title'		=> 'Profil',
 			'content'	=> 'Memperbarui no hp',

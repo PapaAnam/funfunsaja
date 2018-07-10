@@ -22,6 +22,7 @@ use Hash;
 use App\Traits\RightMenu;
 use App\Content;
 use App\Traits\Token;
+use App\Events\SendLinkAndSms;
 
 class UserController extends Controller
 {
@@ -112,6 +113,7 @@ class UserController extends Controller
 
 	public function updatePass(UpdatePassword $r)
 	{
+		$token = $this->generateToken();
 		$pass_is_same = Hash::check($r->old_password, $r->user()->password);
 		if(!$pass_is_same){
 			return response([
@@ -126,10 +128,16 @@ class UserController extends Controller
 			'password' => bcrypt($r->password)
 		]);
 
+		$user = $r->user();
+		if(app()->environment() != 'local'){
+			event(new SendLinkAndSms('update_password',$user));
+		}
+
 		$r->user()->activities()->create([
 			'title'		=> 'Profil',
 			'content'	=> 'Memperbarui password',
 		]);
+		Auth::logout();
 		return 'Password berhasil diperbarui';
 	}
 
@@ -150,8 +158,9 @@ class UserController extends Controller
 		]);
 		$user = $r->user();
 		$phone = $r->user()->phone_number;
-		if(app()->environment() != 'local')
-			event(new UserCreated($user));
+		if(app()->environment() != 'local'){
+			event(new SendLinkAndSms('update_email',$user));
+		}
 
 		$r->user()->activities()->create([
 			'title'		=> 'Profil',

@@ -19,7 +19,7 @@
 			<h4 class="text-light">Konten</h4>
 			@foreach ($_ck as $c)
 			<span class="badge badge-danger p-2 mt-2">
-				<a class="text-light" href="{{ route('contents', $c->path) }}">{{ $c->name }}</a>
+				<a class="text-light" href="{{ $c->full_url }}">{{ $c->name }}</a>
 			</span>
 			@endforeach
 		</div>

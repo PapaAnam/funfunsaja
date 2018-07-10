@@ -19,58 +19,56 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 		Route::get('/edit-password', 'UserController@editPass');
 	});
 
-	// Route::group(['middleware' => ['complete_bio', 'complete_biodata', 'complete_biography', 'complete_bank_account']], function(){
-
-		# CONTENTS
+	# CONTENTS
 	Route::prefix('contents')->group(function(){
 		Route::get('/{ck}/{content}/confirm', 'ContentController@alert')->name('contents.confirm');
 		Route::post('/buy', 'ContentController@buy')->name('contents.buy');
 	});
 
-		# USER PROFILE
+	# USER PROFILE
 	Route::group(['prefix' => 'user-profile'], function(){
 		Route::get('/cv/print', 'UserController@printCV')->name('cv.print');
 	});
 
-		# UPGRADE MEMBER
+	# UPGRADE MEMBER
 	Route::get('/upgrade-member', 'UserController@upgradeForm')->name('upgrade_member');
 
-		# MEMBER STATUS
+	# MEMBER STATUS
 	Route::get('/member-status', 'UserController@memberStatus')->name('member_status');
 
-		# NOTIFICATIONS
+	# NOTIFICATIONS
 	Route::get('/my-notifications', 'NotificationController@index')->name('my_notif');
 
-		# MY ACTIVITIES
+	# MY ACTIVITIES
 	Route::get('/my-activities', 'ActivityController@index')->name('my_activities');
 
-		# MY POINTS
+	# MY POINTS
 	Route::get('/my-points', 'PointController@index')->name('my_points');
 
-		# COMMENT
+	# COMMENT
 	Route::get('/comments/{content}', 'CommentController@index')->name('comment');
 	Route::get('/comments/{content}/{comment}', 'CommentController@setBest')->name('comment.best');
 
-		# FEEDBACK COMMENTS
+	# FEEDBACK COMMENTS
 	Route::get('/feedback-comments/{feedback}', 'CommentController@onFeedback')->name('feedback_comment');
 	Route::get('/feedback-comments/{feedback}/{comment}', 'CommentController@setBestFeedback')->name('feedback_comment.best');
 
-		# MY COMMENTS ON CONTENTS
+	# MY COMMENTS ON CONTENTS
 	Route::get('/my-comments/content', 'CommentController@mineInContent')->name('comments.content');
 	Route::get('/my-comments/content/edit/{content}/{comment}', 'CommentController@mineInContentEdit')->name('comments.content.edit');
 
-		# MY COMMENTS ON FEEDBACKS
+	# MY COMMENTS ON FEEDBACKS
 	Route::get('/my-comments/feedback', 'CommentController@mineInFeedback')->name('comments.feedback');
 	Route::get('/my-comments/feedback/edit/{feedback}/{comment}', 'CommentController@mineInFeedbackEdit')->name('comments.feedback.edit');
 
-		# KONTEN
+	# KONTEN
 	Route::group(['prefix' => 'my-contents'], function(){
 		Route::get('/', 'ContentController@index')->name('my_content');
 		Route::get('/create', 'ContentController@create')->name('create_content');
 		Route::get('/edit/{content}', 'ContentController@edit')->name('my_content.edit');
 	});
 
-		# MY FEEDBACKS
+	# MY FEEDBACKS
 	Route::group(['prefix' => 'my-feedbacks'], function(){
 		Route::get('/', 'FeedbackController@myFb')->name('my_feedbacks');
 		Route::get('/create', 'FeedbackController@create')->name('create_feedbacks');
@@ -79,7 +77,7 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 		Route::put('/update/{id}', 'FeedbackController@update');
 	});
 
-		# SALDO USER
+	# SALDO USER
 	Route::group(['prefix' => 'deposit-transactions'], function(){
 		Route::get('/', 'DepositTransactionController@index')->name('my_deposit');
 		Route::get('/claim', 'DepositTransactionController@claimView')->name('claim_deposit');
@@ -89,8 +87,6 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 		Route::delete('/delete/{id}', 'DepositTransactionController@delete');
 	});
 
-		# SET KOMENTAR TERBAIK
+	# SET KOMENTAR TERBAIK
 	Route::post('/comments/set-best/{comment}/{content}', 'CommentController@setTerbaik');
-	// });
-
 });

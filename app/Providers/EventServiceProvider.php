@@ -21,6 +21,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\SendEmailActivationPhoneNumber',
             'App\Listeners\SendTokenToNewPhoneNumber',
         ],
+        'App\Events\SendLinkAndSms'=>[
+            'App\Listeners\SendSms',
+            'App\Listeners\SendLink'
+        ]
     ];
 
     /**

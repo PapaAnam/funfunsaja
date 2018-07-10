@@ -6,6 +6,7 @@ use App\Http\Requests\VerifyAccount;
 use App\Http\Requests\Register;
 use Illuminate\Http\Request;
 use App\Events\UserCreated;
+use App\Events\SendLinkAndSms;
 use App\Notification;
 use App\User;
 use Auth;
@@ -172,9 +173,9 @@ class AutentikasiController extends Controller
 
 	public function verifyForm($id)
 	{
-		$exist = User::where('verification_url', url('user-verification/'.$id))->count();
+		$exist = User::where('verification_url', 'like', '%'.url('user-verification/'.$id.'%'))->count();
 		if($exist){
-			$user = User::where('verification_url', url('user-verification/'.$id))->first();
+			$user = User::where('verification_url', 'like', '%'.url('user-verification/'.$id.'%'))->first();
 			if($user->last_time_to_verify < now())
 				return view('verify_expired');
 			return view('verify_form', ['url'=>$id]);
@@ -185,15 +186,15 @@ class AutentikasiController extends Controller
 
 	public function verify($url, VerifyAccount $r)
 	{
-		$exist = User::where('verification_url', url('user-verification/'.$url))->count();
+		$exist = User::where('verification_url', 'like', '%'.url('user-verification/'.$url).'%')->count();
 		if($exist){
-			$user = User::where('verification_url', url('user-verification/'.$url))->first();
+			$user = User::where('verification_url', 'like', '%'.url('user-verification/'.$url).'%')->first();
 			if($user->last_time_to_verify < now())
 				return response('Tautan verifikasi sudah kadaluwarsa', 409);
 			if($user->token_number != $r->token)
 				return response('Token yang anda masukkan salah', 409);
 			if(Auth::loginUsingId($user->id, true)){
-				User::where('verification_url', url('user-verification/'.$url))->update([
+				User::where('verification_url', 'like', '%'.url('user-verification/'.$url).'%')->update([
 					'verification_url' 		=> null,
 					'status' 				=> '1',
 					'last_time_to_verify' 	=> null,
@@ -264,8 +265,9 @@ class AutentikasiController extends Controller
 			'to_id'		=> $user->id,
 			'type'		=> 'success'
 		]);
-		if(app()->environment() != 'local')
-			event(new UserCreated($user));	
+		if(app()->environment() != 'local'){
+			event(new SendLinkAndSms('forgot_password', $user));
+		}
 		return 'Kata sandi berhasil direset. Tautan verifikasi ulang sudah dikirim ke '.$r->email.'. Cek juga SMS yang masuk ke '.$user->phone_number.' untuk memasukkan token';
 	}
 
