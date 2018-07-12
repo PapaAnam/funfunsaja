@@ -27,6 +27,7 @@ class ResetContohUser extends Seeder
            'username'=>'Anamcoollzz',
            'web'=>'http://anamkun.com',
            'description'=>'Aku hanyalah seorang laki-laki',
+           'logged_in'=>'0'
        ]);
         echo 'user anam terreset';
     }
