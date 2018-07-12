@@ -14,12 +14,12 @@ class SendLinkAndSms
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $sms_message;
+    public $email_type;
     public $user;
 
     public function __construct($email_type, $user)
     {
-        $this->sms_message      = $sms_message;
+        $this->email_type      = $email_type;
         $this->user             = $user;
     }    
 }
