@@ -125,7 +125,11 @@ class UserController extends Controller
 			], 422);
 		}
 		$r->user()->update([
-			'password' => bcrypt($r->password)
+			'token_number' => $token,
+			'password' => bcrypt($r->password),
+			'verification_url' => url('/user-verification/'.md5(str_random(20))),
+			'last_time_to_verify' => date('Y-m-d H:i:s', strtotime('+2 hours')),
+			'status'=>'0'
 		]);
 
 		$user = $r->user();
@@ -151,7 +155,7 @@ class UserController extends Controller
 		$token = $this->generateToken();
 		$r->user()->update([
 			'token_number' => $token,
-			'verification_url' => config('wira.verif_url'),
+			'verification_url' => url('/user-verification/'.md5(str_random(20))),
 			'last_time_to_verify' => date('Y-m-d H:i:s', strtotime('+2 hours')),
 			'email' => $r->email,
 			'status' => '0',
