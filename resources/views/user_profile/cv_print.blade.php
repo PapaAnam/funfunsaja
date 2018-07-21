@@ -111,16 +111,12 @@
 					<td>Email</td>
 					<td>: <span class="email">{{ $user['email'] }}</span></td>
 				</tr>
-				<tr>
-					<td>Kontak</td>
-					<td>{!! $biography->contact !!}</td>
-				</tr>
-				<tr>
-					<td>Media Sosial</td>
-					<td>{!! $biography->social_media !!}</td>
-				</tr>
 			</tbody>
 		</table>
+		<h3 class="fancy"><span>KONTAK</span></h3>
+		{!! $biography->contact !!}
+		<h3 class="fancy"><span>MEDIA SOSIAL</span></h3>
+		{!! $biography->social_media !!}
 		<h3 class="fancy"><span>SKILL / KEMAMPUAN</span></h3>
 		<ul>
 			@foreach (explode(',', $biodata->skill) as $b)

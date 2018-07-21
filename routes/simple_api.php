@@ -93,5 +93,17 @@ Route::get('/upgrade-member-setting', 'Admin\SettingController@upMember');
 
 # LOGOUT
 Route::middleware('admin')->group(function(){
+	Route::get('/data-diri', 'DataDiriController@get');
+	Route::put('/data-diri/verifikasi-ktp/{user_bio}', 'DataDiriController@verifikasiKtp');
+	Route::put('/data-diri/tolak-ktp/{user_bio}', 'DataDiriController@tolakKtp');
 	Route::post('/logout', 'Auth\LoginController@logout');
 });
+
+// profil saya
+Route::get('/biodata/user-aktif', 'BiodataController@getUserAktif');
+Route::put('/biodata/user-aktif', 'BiodataController@update');
+Route::get('/biodata/skill', 'BiodataController@getSkill');
+Route::get('/biodata/passion', 'BiodataController@getPassion');
+Route::get('/biodata/hobi', 'BiodataController@getHobi');
+Route::get('/biodata/bahasa', 'BiodataController@getBahasa');
+Route::get('/biodata/karakter', 'BiodataController@getKarakter');

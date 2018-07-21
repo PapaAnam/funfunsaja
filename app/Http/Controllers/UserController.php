@@ -258,10 +258,27 @@ class UserController extends Controller
 			'status' => '0'
 		]);
 		$r->user()->biography()->create($sd);
-
+		$modul = '';
+		if($bio == 'social_media'){
+			$modul = 'media sosial';
+		}elseif($bio == 'contact'){
+			$modul = 'kontak';
+		}elseif($bio == 'education'){
+			$modul = 'pendidikan';
+		}elseif($bio == 'work_experience'){
+			$modul = 'pengalaman kerja';
+		}elseif($bio == 'certificate'){
+			$modul = 'sertifikat';
+		}elseif($bio == 'appreciation'){
+			$modul = 'penghargaan';
+		}elseif($bio == 'organization'){
+			$modul = 'organisasi';
+		}elseif($bio == 'portfolio'){
+			$modul = 'portofolio';
+		}
 		$r->user()->activities()->create([
 			'title'		=> 'Profil',
-			'content'	=> 'Memperbarui biografi',
+			'content'	=> 'Memperbarui '.$modul.' pada biografi',
 		]);
 		return $r->name.' berhasil diperbarui';
 	}

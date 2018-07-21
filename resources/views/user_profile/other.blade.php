@@ -15,13 +15,11 @@
 			</div>
 			@endif
 			<h4>Profil Saya</h4>
+			<hr>
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 				@if(Auth::id() == $user['id'])
 				<li class="nav-item">
-					<a class="nav-link {{ session('active') == 'bank' ? 'active' : 'active' }}" id="bank-tab" data-toggle="pill" href="#bank" role="tab" aria-controls="bank" aria-selected="true">Rekening</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link {{ session('active') == 'bio' ? 'active' : '' }}" id="bio-tab" data-toggle="pill" href="#bio" role="tab" aria-controls="bio" aria-selected="true">Data Diri</a>
+					<a class="nav-link active" id="bio-tab" data-toggle="pill" href="#bio" role="tab" aria-controls="bio" aria-selected="true">Data Diri</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link {{ session('active') == 'biodata' ? 'active' : '' }}" id="biodata-tab" data-toggle="pill" href="#biodata" role="tab" aria-controls="biodata" aria-selected="true">Biodata</a>
@@ -39,10 +37,7 @@
 			</ul>
 			<div class="tab-content" id="pills-tabContent">
 				@if(Auth::id() == $user['id'])
-				<div class="tab-pane fade show {{ session('active') == 'bank' ? 'active' : 'active' }}" id="bank" role="tabpanel" aria-labelledby="bank-tab">
-					<my-bank :data="{{ $my_bank ? $my_bank : json_encode([]) }}"></my-bank>
-				</div>
-				<div class="tab-pane fade show {{ session('active') == 'bio' ? 'active' : '' }}" id="bio" role="tabpanel" aria-labelledby="bio-tab">
+				<div class="tab-pane fade show active" id="bio" role="tabpanel" aria-labelledby="bio-tab">
 					<my-bio :data="{{ $my_bio ? $my_bio : json_encode([]) }}" :provinces="{{ $provinces }}" :cities="{{ $cities }}" :regions="{{ $regions }}" :villages="{{ $villages }}"></my-bio>
 				</div>
 				<div class="tab-pane fade show {{ session('active') == 'biodata' ? 'active' : '' }}" id="biodata" role="tabpanel" aria-labelledby="biodata-tab">

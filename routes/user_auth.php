@@ -89,4 +89,11 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 
 	# SET KOMENTAR TERBAIK
 	Route::post('/comments/set-best/{comment}/{content}', 'CommentController@setTerbaik');
+
+	// Profil saya
+	Route::prefix('profil-saya')->group(function(){
+		Route::prefix('biodata')->group(function(){
+			Route::get('/ubah', 'BiodataController@edit');
+		});
+	});
 });

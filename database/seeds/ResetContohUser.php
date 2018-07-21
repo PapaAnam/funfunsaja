@@ -12,8 +12,26 @@ class ResetContohUser extends Seeder
      */
     public function run()
     {
+      User::updateOrCreate([
+        'username'=>'Anamcoollzz',
+        ], [
+           'password'=>bcrypt('Narutolover11'),
+           'wrong_login'=>0,
+           'verification_url'=>null,
+           'token_number'=>null,
+           'phone_number'=>'085322778935',
+           'avatar'=>'ujicoba',
+           'balance'=>0,
+           'point'=>0,
+           'status'=>'1',
+           'email'=>'hh@hh.hh',
+           'username'=>'hhhhhh',
+           'web'=>'http://anamkun.com',
+           'description'=>'Aku hanyalah seorang laki-laki',
+           'logged_in'=>'0'
+       ]);
     	User::updateOrCreate([
-    		'email'=>'hairulanam21@outlook.com'
+    		'email'=>'hairulanam21@outlook.com',
         ], [
            'password'=>bcrypt('Narutolover11'),
            'wrong_login'=>0,

@@ -43,18 +43,14 @@
 						<td>: <span class="email">{{ $user['email'] }}</span></td>
 					</tr>
 					@endif
-					@if($biography)
-					<tr>
-						<td>Kontak</td>
-						<td>{!! $biography->contact !!}</td>
-					</tr>
-					<tr>
-						<td>Media Sosial</td>
-						<td>{!! $biography->social_media !!}</td>
-					</tr>
-					@endif
 				</tbody>
 			</table>
+			@if($biography)
+			<h3 class="fancy"><span>KONTAK</span></h3>
+			{!! $biography->contact !!}
+			<h3 class="fancy"><span>MEDIA SOSIAL</span></h3>
+			{!! $biography->social_media !!}
+			@endif
 			@if($biodata)
 			<h3 class="fancy"><span>SKILL / KEMAMPUAN</span></h3>
 			<ul>
