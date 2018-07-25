@@ -29,6 +29,14 @@
     @stack('css')
     <link rel="stylesheet" href="{{ asset(mix('css/my-style.css')) }}">
     @stack('style')
+    <style>
+    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+        background-color: #dc3545;
+    }
+    .nav-link, .nav-link:hover {
+        color: #dc3545;
+    }
+</style>
 </head>
 <body>
     <div class="wrapper_boxed">

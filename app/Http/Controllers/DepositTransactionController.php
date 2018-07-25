@@ -20,6 +20,7 @@ class DepositTransactionController extends Controller
 			'data' 			=> $deposits,
 			'receivers' 	=> $receivers,
 			'claim_logs'	=> $claim_logs,
+			'tiket'=>DepositTransaction::where('status', 'Order')->where('user_id', Auth::id())->get(),
 		];
 		return view('balance_transactions.index', $oper);
 	}
@@ -37,8 +38,36 @@ class DepositTransactionController extends Controller
 		return view('balance_transactions.claim_view', $oper);
 	}
 
-	public function store(StoreDepositTransaction $r)
+	public function pesanSaldo(Request $r)
 	{
+		$r->validate([
+			'deposit'=>'required|numeric|min:50000'
+		]);
+		$data = [
+			'user_id' 	=> Auth::id(),
+			'jenis_transaksi'=>'Pesan Saldo'
+		];
+		Activity::create([
+			'user_id'	=> Auth::id(),
+			'title'		=> 'Pesan saldo',
+			'content'	=> 'Memesan saldo sebesar '.$r->deposit
+		]);
+		DepositTransaction::create($data+$r->except(['transfer']));
+		return response('Pesan saldo berhasil dilakukan. Ditunggu pembayarannya');
+	}
+
+	public function bayarSaldo(Request $r)
+	{
+		$r->validate([
+			'no_tiket'=>'required',
+			'sender_name' => 'required|string',
+            'sender_bill' => 'required',
+            'send_time' => 'required|date_format:d/m/Y H:i',
+            'proof' => 'required|file|max:2000|mimes:jpeg,png',
+            'jumlah_transfer'=>'required|numeric|min:50000'
+		], [
+			'sender_bill.required'=>'No rekening pengirim wajib diisi'
+		]);
 		$send_time = substr($r->send_time, 6, 4).'-'.substr($r->send_time, 3, 2).'-'.substr($r->send_time, 0, 2).' '.substr($r->send_time, 11, 5).':00';
 		if($send_time > now()){
 			return response([
@@ -50,17 +79,16 @@ class DepositTransactionController extends Controller
 		$proof = $r->file('proof')->store('public/deposit-transactions');
 		$data = [
 			'proof' 	=> str_replace('public/', '', $proof),
-			'user_id' 	=> Auth::id(),
-			'status' 	=> '0',
-			'send_time' => $send_time
+			'send_time' => $send_time,
+			'status'=>'Konfirm'
 		];
 		Activity::create([
 			'user_id'	=> Auth::id(),
-			'title'		=> 'Beli Deposit',
-			'content'	=> 'Membeli deposit sebesar '.$r->deposit
+			'title'		=> 'Bayar saldo',
+			'content'	=> 'Membayar saldo sebesar '.$r->jumlah_transfer
 		]);
-		DepositTransaction::create($data+$r->except(['transfer']));
-		return response('Beli saldo berhasil dilakukan. Tunggu verifikasi dari admin');
+		DepositTransaction::find((Int) $r->no_tiket)->update($data+$r->except(['no_tiket']));
+		return response('Bayar saldo berhasil dilakukan. Tunggu verifikasi dari admin');
 	}
 
 	public function delete(DepositTransaction $depo)

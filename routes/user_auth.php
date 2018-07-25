@@ -78,8 +78,8 @@ Route::group(['middleware' => ['user', 'must_logout']], function(){
 	});
 
 	# SALDO USER
-	Route::group(['prefix' => 'deposit-transactions'], function(){
-		Route::get('/', 'DepositTransactionController@index')->name('my_deposit');
+	Route::group(['prefix' => 'transaksi-saldo'], function(){
+		Route::get('/', 'DepositTransactionController@index')->name('transaksi-saldo');
 		Route::get('/claim', 'DepositTransactionController@claimView')->name('claim_deposit');
 		Route::get('/create', 'DepositTransactionController@create');
 		Route::get('/edit/{id}', 'DepositTransactionController@edit');

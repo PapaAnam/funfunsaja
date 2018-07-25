@@ -30,7 +30,7 @@
 			</a>
 		</li>
 		<li>
-			<a class="{{$_font_type }}" href="{{ url('deposit-transactions') }}">
+			<a class="{{$_font_type }}" href="{{ route('transaksi-saldo') }}">
 				Deposit Saya
 			</a>
 		</li>

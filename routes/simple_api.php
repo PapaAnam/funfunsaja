@@ -63,8 +63,9 @@ Route::group(['middleware' => ['user_auth']], function(){
 		});
 
 			# DEPOSIT TRANSACTIONS
-		Route::group(['prefix' => 'deposit-transactions'], function(){
-			Route::post('/store', 'DepositTransactionController@store');
+		Route::group(['prefix' => 'transaksi-saldo'], function(){
+			Route::post('/pesan-saldo', 'DepositTransactionController@pesanSaldo');
+			Route::post('/bayar-saldo', 'DepositTransactionController@bayarSaldo');
 			Route::delete('/{depo}', 'DepositTransactionController@delete')->name('deposit.delete');
 		});
 

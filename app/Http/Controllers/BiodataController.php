@@ -36,6 +36,10 @@ class BiodataController extends Controller
 			'character'=>implode(',', $r->character),
 			'status'=>'1'
 		]);
+		$r->user()->activities()->create([
+			'title'		=> 'Biodata',
+			'content'	=> 'Memperbarui biodata user',
+		]);
 		return 'Biodata berhasil diperbarui';
 	}
 

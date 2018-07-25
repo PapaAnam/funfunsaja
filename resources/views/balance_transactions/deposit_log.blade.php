@@ -5,40 +5,30 @@
 		@component('table')
 		<thead>
 			<tr>
-				<th width="10px">#</th>
-				<th>Deposit</th>
-				<th>Tanggal</th>
-				<th>Waktu Transfer</th>
+				<th>No Tiket</th>
+				<th>Tanggal Transaksi</th>
+				<th>Jenis Transaksi</th>
+				<th>Saldo Tiket</th>
+				<th>Saldo Ditransfer</th>
 				<th>Status</th>
+				<th>Tanggal Approve</th>
+				<th>Keterangan</th>
 				<th width="70px">Aksi</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach ($data as $d)
 			<tr>
-				<td>{{ $loop->iteration }}</td>
-				<td>{{ $d->depo_view }}</td>
-				<td>{{ $d->crat }}</td>
-				<td>{{ $d->send_time }}</td>
+				<td>{{ $d->no_tiket }}</td>
+				<td>{{ substr($d->created_at, 0, 10) }}</td>
+				<td>{{ $d->jenis_transaksi }}</td>
+				<td align="right">{{ number_format($d->deposit + $d->unique_code, 0, ',', '.') }}</td>
+				<td align="right">{{ $d->status == 'Gagal' ? 0 : (($d->status == 'Order') ? '' : ($d->jenis_transaksi == 'Ambil saldo' ? -$d->jumlah_transfer : number_format($d->jumlah_transfer, 0, ',', '.'))) }}</td>
+				<td>{{ $d->status }}</td>
+				<td>{{ $d->tanggal_approve }}</td>
+				<td>{{ $d->reason }}</td>
 				<td>
-					@if($d->status === '1')
-					<span class="text-white badge badge-success">
-						Saldo sudah masuk
-					</span>
-					@elseif($d->status === '0')
-					<span class="text-white badge badge-warning">
-						Menunggu verifikasi admin
-					</span>
-					@else
-					<span class="text-white badge badge-danger">
-						Ditolak
-					</span>
-					<br>
-					{{ $d->reason }}
-					@endif
-				</td>
-				<td>
-					@if($d->status === '0')
+					@if($d->status === 'Order' || $d->status === 'Konfirm' || $d->status === '')
 					<del-btn title="Batalkan" url="{{ route('deposit.delete', $d->id) }}"></del-btn>
 					@endif
 				</td>

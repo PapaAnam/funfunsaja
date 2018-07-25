@@ -76,7 +76,7 @@ class DepositController extends Controller
 		]);
 		$depo = DepositTransaction::find($id);
 		$depo->update([
-			'status' => $r->status,
+			'status' => $r->status == 2 ? 'Gagal' : 'Approve',
 			'reason' => $r->reason
 		]);
 		if($r->status == 1){
@@ -85,12 +85,12 @@ class DepositController extends Controller
 				'balance' => $u->saldo+$depo->deposit
 			]);
 		}
-		$msg 	= 'Selamat pembelian deposit sebesar '.$depo->deposit.' berhasil diverifikasi dan dimasukkan ke dalam saldo anda. <a href="'.route('my_deposit').'">Deposit Saya</a>';
+		$msg 	= 'Selamat pembelian deposit sebesar '.$depo->deposit.' berhasil diverifikasi dan dimasukkan ke dalam saldo anda. <a href="'.route('transaksi-saldo').'">Deposit Saya</a>';
 		$title 	= 'Deposit diterima';
 		$type 	= 'success';
 		if($r->status != 1){
 			$title 	= 'Deposit ditolak';
-			$msg = 'Pembelian deposit sebesar '.$depo->deposit.' gagal dilakukan. <a href="'.route('my_deposit').'">Deposit Saya</a>';
+			$msg = 'Pembelian deposit sebesar '.$depo->deposit.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Deposit Saya</a>';
 			$type 	= 'danger';
 		}
 		Notification::create([
