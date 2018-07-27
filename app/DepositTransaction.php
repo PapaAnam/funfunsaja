@@ -8,7 +8,7 @@ class DepositTransaction extends Model
 {
 	protected $table = 'deposits';
 	protected $guarded = [];
-	protected $appends = ['crat', 'depo_view'];
+	protected $appends = ['crat', 'depo_view', 'jumlah_transfer_rp', 'jumlah_disetujui_rp'];
 
 	public function getCratAttribute()
 	{
@@ -54,6 +54,16 @@ class DepositTransaction extends Model
 	public function scopeMine($q, $user)
 	{
 		return $q->where('user_id', $user)->latest()->paginate(10);
+	}
+
+	public function getJumlahTransferRpAttribute()
+	{
+		return number_format($this->jumlah_transfer, 0, ',','.');
+	}
+
+	public function getJumlahDisetujuiRpAttribute()
+	{
+		return number_format($this->jumlah_disetujui, 0, ',','.');
 	}
 
 }

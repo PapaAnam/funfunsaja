@@ -5,9 +5,7 @@
 	'deposit_log' 	=> 'Riwayat Saldo',
 	'buy'			=> 'Pesan Saldo',
 	'bayar-saldo'	=> 'Bayar Saldo',
-	'claim'			=> [
-		'Ambil Saldo', route('claim_deposit')
-	],
+	'ambil-saldo'			=> 'Ambil Saldo',
 ]
 ])
 @component('pills_content')
@@ -19,6 +17,9 @@
 @endcomponent
 @component('pills_tab', ['id' => 'bayar-saldo'])
 <bayar-saldo :tiket="{{ $tiket }}"></bayar-saldo>
+@endcomponent
+@component('pills_tab', ['id' => 'ambil-saldo'])
+<ambil-saldo :deposit="{{ Auth::user()->balance }}"></ambil-saldo>
 @endcomponent
 @endcomponent
 @endsection

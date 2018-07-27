@@ -6,7 +6,7 @@
 			'claim_log'		=> 'Riwayat Ambil Saldo',
 			'claim'			=> 'Ambil Saldo',
 			'buy'			=> [
-				'Beli Saldo', route('my_deposit')
+				'Beli Saldo', route('transaksi-saldo')
 			],
 		]
 		])

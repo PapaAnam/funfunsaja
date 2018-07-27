@@ -16,12 +16,20 @@ class DepositController extends Controller
 
 	private function getToday()
 	{
-		return DepositTransaction::with('bank', 'user')->where('created_at', 'LIKE', date('Y-m-d').'%')->latest()->get();
+		return DepositTransaction::with('bank', 'user')
+		->where('jenis_transaksi', 'Pesan Saldo')
+		->where('created_at', 'LIKE', date('Y-m-d').'%')
+		->latest()
+		->get();
 	}
 
 	private function getOther($year, $month)
 	{
-		return DepositTransaction::with('bank', 'user')->where('created_at', 'LIKE', date($year.'-'.$month).'%')->latest()->get();
+		return DepositTransaction::with('bank', 'user')
+		->where('jenis_transaksi', 'Pesan Saldo')
+		->where('created_at', 'LIKE', date($year.'-'.$month).'%')
+		->latest()
+		->get();
 	}
 
 	public function today()
@@ -72,12 +80,14 @@ class DepositController extends Controller
 	public function verif($id, Request $r)
 	{
 		$r->validate([
-			'reason' => $r->status == 2 ? 'required' : ''
+			'reason' => $r->status == 2 ? 'required' : '',
+			'jumlah_disetujui'=>'required|numeric|min:50000'
 		]);
 		$depo = DepositTransaction::find($id);
 		$depo->update([
 			'status' => $r->status == 2 ? 'Gagal' : 'Approve',
-			'reason' => $r->reason
+			'reason' => $r->reason,
+			'tanggal_approve'=>date('Y-m-d')
 		]);
 		if($r->status == 1){
 			$u = User::find($depo->user_id);
@@ -101,7 +111,7 @@ class DepositController extends Controller
 			'from_type'		=> '1',
 			'type'			=> $type
 		]);
-		return $r->status == 2 ? 'Transaksi saldo berhasil ditolak' : 'Transaksi saldo berhasil diverifikasi';
+		return $r->status == 2 ? 'Pembelian saldo berhasil ditolak' : 'Pembelian saldo berhasil diverifikasi';
 	}
 
 	public function claim($year, $month = null)
@@ -112,12 +122,29 @@ class DepositController extends Controller
 		return DepositClaimLog::with('user')->where('created_at', 'LIKE', $year.'-'.$month.'%')->latest()->get();
 	}
 
-	public function claimVerify(Request $r, DepositClaimLog $depo)
+	public function claimVerify(Request $r, DepositTransaction $depo)
 	{
-		$depo->update([
-			'status' => '1'
-		]);
-		return 'Pengambilan saldo berhasil diverifikasi';
+		if($r->status == 2){
+			$r->validate([
+				'reason'=>'required',
+			]);
+			$depo->update([
+				'status'=>'Gagal',
+				'reason'=>$r->reason,
+			]);
+			$user = User::find($depo->user_id);			
+			$user->balance += $depo->deposit;
+			$user->save();
+		}else{
+			$r->validate([
+				'jumlah_disetujui'=>'required|numeric',
+			]);
+			$depo->update([
+				'status'=>'Approve',
+				'jumlah_disetujui'=>$r->jumlah_disetujui,
+			]);
+		}
+		return 'Pengambilan saldo berhasil '.$r->status == 2 ? 'ditolak' : 'diterima';
 	}
 
 }

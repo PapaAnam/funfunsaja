@@ -147,8 +147,10 @@ Route::put('/upgrade-member-setting', 'SettingController@updateUpMember');
 Route::prefix('depo-claims')->group(function(){
 	Route::get('/today', 'DepositClaimController@today');
 	Route::get('/{year}/{month}', 'DepositClaimController@filter');
-	Route::put('/verify/{depo}', 'DepositController@claimVerify');
 });
+
+// ambil saldo
+Route::put('/ambil-saldo/verifikasi/{depo}', 'DepositController@claimVerify');
 
 # TANGGAPAN
 Route::prefix('comments')->group(function(){

@@ -184,4 +184,9 @@ class User extends Authenticatable
             return 'Non aktif';
         }
     }
+
+    public function transaksiSaldo()
+    {
+        return $this->hasMany('App\DepositTransaction');
+    }
 }

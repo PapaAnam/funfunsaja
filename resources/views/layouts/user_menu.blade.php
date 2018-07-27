@@ -31,7 +31,7 @@
 		</li>
 		<li>
 			<a class="{{$_font_type }}" href="{{ route('transaksi-saldo') }}">
-				Deposit Saya
+				Transaksi Saldo
 			</a>
 		</li>
 		<li>

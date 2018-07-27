@@ -105,16 +105,21 @@ class DepositTransactionController extends Controller
 
 	public function claim(Request $r)
 	{
-		$u = $r->user();
 		$r->validate([
-			'diambil'	=> 'required|numeric|min:0|max:'.$u->balance,
+			'diambil'	=> 'required|numeric|min:0|max:99999999',
 		]);
-		$u->depoClaimLogs()->create([
-			'deposit'	=> $r->diambil
+		$u = $r->user()->transaksiSaldo()->create([
+			'deposit'=>$r->diambil,
+			'no_tiket'=>$r->no_tiket,
+			'jenis_transaksi'=>'Ambil Saldo',
+			'status'=>'Konfirm',
 		]);
-		$u->balance -= $r->diambil;
-		$u->save();
-		$u->activities()->generate('Ambil Saldo', 'Pengambilan saldo sebesar '.$r->diambil, $u->id);
+		// $u->depoClaimLogs()->create([
+		// 	'deposit'	=> $r->diambil
+		// ]);
+		// $u->balance -= $r->diambil;
+		// $u->save();
+		$r->user()->activities()->generate('Ambil Saldo', 'Pengambilan saldo sebesar '.$r->diambil, $r->user()->id);
 		return 'Pengambilan saldo berhasil dilakukan. Menunggu verifikasi admin.';
 	}
 }

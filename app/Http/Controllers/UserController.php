@@ -367,4 +367,12 @@ class UserController extends Controller
 		];
 		return view('member_status.index', $oper);
 	}
+
+	public function getUserAktif(Request $r)
+	{
+		if($r->query('with')){
+			return Auth::user()->with($r->query('with'))->first();
+		}
+		return Auth::user();
+	}
 }

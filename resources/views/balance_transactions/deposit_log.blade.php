@@ -23,7 +23,8 @@
 				<td>{{ substr($d->created_at, 0, 10) }}</td>
 				<td>{{ $d->jenis_transaksi }}</td>
 				<td align="right">{{ number_format($d->deposit + $d->unique_code, 0, ',', '.') }}</td>
-				<td align="right">{{ $d->status == 'Gagal' ? 0 : (($d->status == 'Order') ? '' : ($d->jenis_transaksi == 'Ambil saldo' ? -$d->jumlah_transfer : number_format($d->jumlah_transfer, 0, ',', '.'))) }}</td>
+				{{-- <td align="right">{{ $d->status == 'Gagal' ? 0 : (($d->status == 'Order') ? '' : ($d->jenis_transaksi == 'Ambil saldo' ? -$d->jumlah_disetujui : number_format($d->jumlah_disetujui, 0, ',', '.'))) }}</td> --}}
+				<td align="right">{{ $d->jumlah_disetujui_rp }}</td>
 				<td>{{ $d->status }}</td>
 				<td>{{ $d->tanggal_approve }}</td>
 				<td>{{ $d->reason }}</td>

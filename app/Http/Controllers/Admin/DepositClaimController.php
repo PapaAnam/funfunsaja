@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Helpers\Api;
-use App\DepositClaimLog;
+use App\DepositTransaction;
 
 class DepositClaimController extends Controller
 {
@@ -13,6 +13,6 @@ class DepositClaimController extends Controller
 
     protected function model()
     {
-    	return DepositClaimLog::with('user');
+    	return DepositTransaction::with('user')->where('jenis_transaksi', 'Ambil Saldo');
     }
 }

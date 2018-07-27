@@ -24,6 +24,9 @@ Route::put('/user-verify/{id}', 'AutentikasiController@verify');
 
 Route::group(['middleware' => ['user_auth']], function(){
 
+	// user aktif
+	Route::get('/user-aktif', 'UserController@getUserAktif');
+
 	# AREA API 
 	Route::get('/cities/{province}', 'AreaController@cities');
 	Route::get('/regions/{city}', 'AreaController@regions');
