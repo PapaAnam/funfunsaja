@@ -371,7 +371,7 @@ class UserController extends Controller
 	public function getUserAktif(Request $r)
 	{
 		if($r->query('with')){
-			return Auth::user()->with($r->query('with'))->first();
+			return User::with($r->query('with'))->where('id', $r->user()->id)->first();
 		}
 		return Auth::user();
 	}

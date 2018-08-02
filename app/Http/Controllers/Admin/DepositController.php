@@ -81,13 +81,14 @@ class DepositController extends Controller
 	{
 		$r->validate([
 			'reason' => $r->status == 2 ? 'required' : '',
-			'jumlah_disetujui'=>'required|numeric|min:50000'
+			'jumlah_disetujui'=>'required|numeric'
 		]);
 		$depo = DepositTransaction::find($id);
 		$depo->update([
 			'status' => $r->status == 2 ? 'Gagal' : 'Approve',
 			'reason' => $r->reason,
-			'tanggal_approve'=>date('Y-m-d')
+			'tanggal_approve'=>date('Y-m-d'),
+			'jumlah_disetujui'=>$r->jumlah_disetujui
 		]);
 		if($r->status == 1){
 			$u = User::find($depo->user_id);
@@ -111,7 +112,7 @@ class DepositController extends Controller
 			'from_type'		=> '1',
 			'type'			=> $type
 		]);
-		return $r->status == 2 ? 'Pembelian saldo berhasil ditolak' : 'Pembelian saldo berhasil diverifikasi';
+		return $r->status == 2 ? 'Pembelian saldo berhasil ditolak' : 'Pembelian saldo berhasil diterima';
 	}
 
 	public function claim($year, $month = null)
@@ -124,24 +125,24 @@ class DepositController extends Controller
 
 	public function claimVerify(Request $r, DepositTransaction $depo)
 	{
+		$r->validate([
+			'reason'=>'required',
+			'jumlah_disetujui'=>'required|numeric',
+		]);
 		if($r->status == 2){
-			$r->validate([
-				'reason'=>'required',
-			]);
 			$depo->update([
 				'status'=>'Gagal',
 				'reason'=>$r->reason,
+				'jumlah_disetujui'=>$r->jumlah_disetujui
 			]);
 			$user = User::find($depo->user_id);			
 			$user->balance += $depo->deposit;
 			$user->save();
 		}else{
-			$r->validate([
-				'jumlah_disetujui'=>'required|numeric',
-			]);
 			$depo->update([
 				'status'=>'Approve',
 				'jumlah_disetujui'=>$r->jumlah_disetujui,
+				'reason'=>$r->reason
 			]);
 		}
 		return 'Pengambilan saldo berhasil '.$r->status == 2 ? 'ditolak' : 'diterima';

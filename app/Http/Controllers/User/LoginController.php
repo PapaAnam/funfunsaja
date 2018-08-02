@@ -20,7 +20,7 @@ class LoginController extends Controller
 		if($exist){
 			$existAndActive = $usr->status == '1';
 			if($existAndActive){
-				if($usr->logged_in == 1){
+				if($usr->logged_in == 1 && strtotime($usr->must_logout) > strtotime(date('Y-m-d H:i:s'))){
 					return response('logged_in', 422);
 				}
 				if(Auth::guard()->attempt([
