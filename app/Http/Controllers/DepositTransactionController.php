@@ -106,7 +106,7 @@ class DepositTransactionController extends Controller
 	public function claim(Request $r)
 	{
 		$r->validate([
-			'diambil'	=> 'required|numeric|min:0|max:99999999',
+			'diambil'	=> 'required|numeric|min:50000|max:99999999',
 		]);
 		$u = $r->user()->transaksiSaldo()->create([
 			'deposit'=>$r->diambil,

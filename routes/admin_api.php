@@ -173,3 +173,9 @@ Route::prefix('setting')->group(function(){
 	Route::get('/sms', 'SmsSettingController@index');
 	Route::put('/sms/update', 'SmsSettingController@update');
 });
+
+# MODERASI MASUKAN 
+Route::prefix('moderasi-masukan')->group(function(){
+	Route::get('/', 'ModerasiMasukanController@index');
+	// Route::put('/', 'ModerasiMasukanController@update');
+});

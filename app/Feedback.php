@@ -10,7 +10,7 @@ class Feedback extends Model
     protected $guarded = [];
     protected $table = 'feedbacks';
 
-    protected $appends = ['short_title', 'crat', 'thumb', 'username', 'short_content', 'avatar', 'dibuat_pada', 'full_url'];
+    protected $appends = ['short_title', 'crat', 'thumb', 'username', 'short_content', 'avatar', 'dibuat_pada', 'full_url','status_view'];
 
     protected $casts = [
         'tags' => 'array'
@@ -121,6 +121,16 @@ class Feedback extends Model
     public function scopePublished($q)
     {
         return $q->where('status', 'published');
+    }
+
+    public function getStatusViewAttribute()
+    {
+        if($this->status === 'waiting')
+            return 'menunggu';
+        if($this->status === 'rejected')
+            return 'ditolak';
+        if($this->status === 'published')
+            return 'dipublikasi';
     }
 
 }

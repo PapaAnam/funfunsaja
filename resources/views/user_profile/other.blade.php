@@ -31,7 +31,7 @@
 					<a class="nav-link {{ session('active') == 'cv' ? 'active' : '' }}" id="cv-tab" data-toggle="pill" href="#cv" role="tab" aria-controls="cv" aria-selected="true">CV</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="cv-tab" href="{{ route('my_deposit') }}" role="tab" aria-controls="cv" aria-selected="true">Deposit</a>
+					<a class="nav-link" id="cv-tab" href="{{ route('transaksi-saldo') }}" role="tab" aria-controls="cv" aria-selected="true">Transaksi Saldo</a>
 				</li>
 				@endif
 			</ul>

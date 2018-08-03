@@ -36,6 +36,9 @@
     .nav-link, .nav-link:hover {
         color: #dc3545;
     }
+    hr {
+        background-color: #dc3545;
+    }
 </style>
 </head>
 <body>

@@ -8,3 +8,7 @@ Route::get('/contents-preview/{content}', 'Admin\ModerateController@preview')->m
 
 # ADMIN LOGOUT
 Route::post('/administrator/api/logout', 'Auth\LoginController@logout');
+
+Route::get('/admin/moderasi-masukan/{url}/preview', 'Admin\ModerasiMasukanController@preview')->name('moderasi-masukan.preview');
+Route::get('/admin/moderasi-masukan/{id}/tolak', 'Admin\ModerasiMasukanController@tolak')->name('moderasi-masukan.tolak');
+Route::get('/admin/moderasi-masukan/{id}/terima', 'Admin\ModerasiMasukanController@terima')->name('moderasi-masukan.terima');
