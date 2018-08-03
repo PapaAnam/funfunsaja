@@ -79,29 +79,29 @@ class DepositController extends Controller
 
 	public function verif($id, Request $r)
 	{
+		$depo = DepositTransaction::find($id);
 		$r->validate([
 			'reason' => $r->status == 2 ? 'required' : '',
-			'jumlah_disetujui'=>'required|numeric'
+			'jumlah_disetujui'=>'required|numeric'. ( $r->jumlah_disetujui >= $depo->deposit  ? '|max:'.$depo->deposit : '') . ($r->status == 1 ? '|min:50000' : ''),
 		]);
-		$depo = DepositTransaction::find($id);
 		$depo->update([
 			'status' => $r->status == 2 ? 'Gagal' : 'Approve',
 			'reason' => $r->reason,
 			'tanggal_approve'=>date('Y-m-d'),
-			'jumlah_disetujui'=>$r->jumlah_disetujui
+			'jumlah_disetujui'=>$r->status == 2 ? 0 : $r->jumlah_disetujui
 		]);
 		if($r->status == 1){
 			$u = User::find($depo->user_id);
 			$u->update([
-				'balance' => $u->saldo+$depo->deposit
+				'balance' => $u->saldo+$depo->jumlah_disetujui
 			]);
 		}
-		$msg 	= 'Selamat pembelian deposit sebesar '.$depo->deposit.' berhasil diverifikasi dan dimasukkan ke dalam saldo anda. <a href="'.route('transaksi-saldo').'">Deposit Saya</a>';
-		$title 	= 'Deposit diterima';
+		$msg 	= 'Selamat pembelian saldo sebesar '.$depo->jumlah_disetujui.' berhasil diverifikasi dan dimasukkan ke dalam saldo anda. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>';
+		$title 	= 'Beli saldo diterima';
 		$type 	= 'success';
 		if($r->status != 1){
-			$title 	= 'Deposit ditolak';
-			$msg = 'Pembelian deposit sebesar '.$depo->deposit.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Deposit Saya</a>';
+			$title 	= 'Beli saldo ditolak';
+			$msg = 'Pembelian saldo sebesar '.$depo->jumlah_disetujui.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>';
 			$type 	= 'danger';
 		}
 		Notification::create([
@@ -127,7 +127,7 @@ class DepositController extends Controller
 	{
 		$r->validate([
 			'reason'=>'required',
-			'jumlah_disetujui'=>'required|numeric'. ( $r->jumlah_disetujui >= $depo->deposit  ? '|max:'.$depo->deposit : ''),
+			'jumlah_disetujui'=>'required|numeric'. ( $r->jumlah_disetujui >= $depo->deposit  ? '|max:'.$depo->deposit : '') . ($r->status == 1 ? '|min:50000' : ''),
 		]);
 		if($r->status == 2){
 			$depo->update([
@@ -140,8 +140,8 @@ class DepositController extends Controller
 			$user->balance += $depo->deposit;
 			$user->save();
 			Notification::create([
-				'title'=>'Deposit diterima',
-				'content'=>'Selamat pembelian deposit sebesar '.$depo->deposit.' berhasil diterima dan dimasukkan ke dalam saldo anda. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
+				'title'=>'Pengambilan saldo diterima',
+				'content'=>'Selamat pengambilan saldo sebesar '.$depo->jumlah_disetujui.' berhasil diterima. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
 				'from_id'=>Auth::guard('admin')->id(),
 				'to_type'=>'0',
 				'to_id'=>$depo->user_id,
@@ -155,8 +155,8 @@ class DepositController extends Controller
 				'tanggal_approve'=>date('Y-m-d')
 			]);
 			Notification::create([
-				'title'=>'Deposit ditolak',
-				'content'=>'Pembelian deposit sebesar '.$depo->deposit.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
+				'title'=>'Pengambilan saldo ditolak',
+				'content'=>'Pengambilan saldo sebesar '.$depo->jumlah_disetujui.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
 				'from_id'=>Auth::guard('admin')->id(),
 				'to_type'=>'0',
 				'to_id'=>$depo->user_id,

@@ -48,14 +48,14 @@ class ModerasiMasukanController extends Controller
 			'to_id'=>$masukan->user_id,
 			'type'=>'success'
 		]);
-		return redirect()->route('moderasi-masukan.preview', [$masukan->url])->with('success_msg', 'Masukan berhasil diterima');
+		return redirect('/admin-menu/moderasi-masukan');
 	}
 
 	public function tolak($id)
 	{
 		$masukan = Feedback::find($id);
 		$masukan->update([
-			'status'=>'published',
+			'status'=>'rejected',
 		]);
 		$masukan = Feedback::find($id);
 		Notification::create([
@@ -66,7 +66,7 @@ class ModerasiMasukanController extends Controller
 			'to_id'=>$masukan->user_id,
 			'type'=>'danger'
 		]);
-		return redirect()->route('moderasi-masukan.preview', [$masukan->url])->with('success_msg', 'Masukan berhasil ditolak');
+		return redirect('/admin-menu/moderasi-masukan');
 	}
 
 }

@@ -1,7 +1,12 @@
 <?php 
 
 # SPA
-Route::view('/admin-menu/{sub_menu?}/{sub_sub?}/{sub_sub_sub?}', 'admin')->name('admin_menu')->middleware('must_logout');
+Route::middleware('must_logout')->group(function(){
+	
+	Route::view('/admin-menu/{sub_menu?}/{sub_sub?}/{sub_sub_sub?}', 'admin')->name('admin_menu');
+	Route::view('/admin-menu/moderasi-masukan', 'admin');
+
+});
 
 # CONTENTS
 Route::get('/contents-preview/{content}', 'Admin\ModerateController@preview')->middleware('must_logout');
