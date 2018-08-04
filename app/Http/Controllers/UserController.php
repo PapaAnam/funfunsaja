@@ -23,6 +23,7 @@ use App\Traits\RightMenu;
 use App\Content;
 use App\Traits\Token;
 use App\Events\SendLinkAndSms;
+use App\UserBio;
 
 class UserController extends Controller
 {
@@ -189,12 +190,13 @@ class UserController extends Controller
 
 	public function updateBio(UpdateUserBio $r)
 	{
+		$ub = UserBio::where('user_id', $r->user()->id)->where('status', '1')->first();
 		$r->user()->bio()->update([
 			'status' => '0'
 		]);
 		$data = [
-			'nin_upload' 	=> $r->user()->bio()->first() ? $r->user()->bio()->first()->nin_upload : null,
-			'photo'			=> $r->user()->bio()->first() ? $r->user()->bio()->first()->photo : null,
+			'nin_upload' 	=> !is_null($ub) ? $ub->nin_upload : null,
+			'photo'			=> !is_null($ub) ? $ub->photo : null,
 		];
 		if($r->file('nin_upload')){
 			$data['nin_upload'] = str_replace('public/', '', $r->file('nin_upload')->store('public/nin-upload'));

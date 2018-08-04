@@ -20,6 +20,13 @@ class LoginController extends Controller
 		if($exist){
 			$existAndActive = $usr->status == '1';
 			if($existAndActive){
+				$sudah30menit = strtotime(date('Y-m-d H:i:s')) - strtotime($usr->aktivitas_terakhir) > 1800;
+				if($sudah30menit || is_null($sr->aktivitas_terakhir)){
+					User::find($usr->id)->update([
+						'logged_in'=>'0'
+					]);
+				}
+				$usr = User::find($usr->id);
 				if($usr->logged_in == 1 && strtotime($usr->must_logout) > strtotime(date('Y-m-d H:i:s'))){
 					return response('logged_in', 422);
 				}
@@ -32,6 +39,7 @@ class LoginController extends Controller
 						'last_login'	=> now(),
 						'must_logout'	=> date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days')),
 						'logged_in'		=> '1',
+						'aktivitas_terakhir'=>date('Y-m-d H:i:s'),
 					);
 					User::where('email', $r->email)->update($ress);
 					session([

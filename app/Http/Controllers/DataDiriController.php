@@ -14,18 +14,26 @@ class DataDiriController extends Controller
     	return is_null($data) ? 'nothing' : $data;
     }
 
-    public function verifikasiKtp(UserBio $userBio)
+    public function verifikasiKtp(UserBio $userBio, Request $r)
     {
+        $r->validate([
+            'keterangan'=>'required',
+        ]);
     	$userBio->update([
-    		'nin_valid'=>'1'
+    		'nin_valid'=>'1',
+            'keterangan_ktp'=>$r->keterangan,
     	]);
     	return 'KTP berhasil diverifikasi';
     }
 
-    public function tolakKtp(UserBio $userBio)
+    public function tolakKtp(UserBio $userBio, Request $r)
     {
+        $r->validate([
+            'keterangan'=>'required',
+        ]);
     	$userBio->update([
-    		'nin_valid'=>'2'
+    		'nin_valid'=>'2',
+            'keterangan_ktp'=>$r->keterangan,
     	]);
     	return 'KTP berhasil ditolak';
     }

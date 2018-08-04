@@ -50,7 +50,7 @@ class DepositTransactionController extends Controller
 		Activity::create([
 			'user_id'	=> Auth::id(),
 			'title'		=> 'Pesan saldo',
-			'content'	=> 'Memesan saldo sebesar '.$r->deposit
+			'content'	=> 'Memesan saldo sebesar '.number_format($r->deposit,0,',','.')
 		]);
 		DepositTransaction::create($data+$r->except(['transfer']));
 		return response('Pesan saldo berhasil dilakukan. Ditunggu pembayarannya');
@@ -85,7 +85,7 @@ class DepositTransactionController extends Controller
 		Activity::create([
 			'user_id'	=> Auth::id(),
 			'title'		=> 'Bayar saldo',
-			'content'	=> 'Membayar saldo sebesar '.$r->jumlah_transfer
+			'content'	=> 'Membayar saldo sebesar '.number_format($r->jumlah_transfer,0,',','.')
 		]);
 		DepositTransaction::find((Int) $r->no_tiket)->update($data+$r->except(['no_tiket']));
 		return response('Bayar saldo berhasil dilakukan. Tunggu verifikasi dari admin');
@@ -119,7 +119,7 @@ class DepositTransactionController extends Controller
 		// ]);
 		// $u->balance -= $r->diambil;
 		// $u->save();
-		$r->user()->activities()->generate('Ambil Saldo', 'Pengambilan saldo sebesar '.$r->diambil, $r->user()->id);
+		$r->user()->activities()->generate('Ambil Saldo', 'Pengambilan saldo sebesar '.number_format($r->diambil,0,',','.'), $r->user()->id);
 		return 'Pengambilan saldo berhasil dilakukan. Menunggu verifikasi admin.';
 	}
 }

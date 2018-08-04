@@ -24,11 +24,15 @@ class ListUserController extends Controller
 				$q->where('username', 'like', '%'.$keyword.'%')
 				->orWhere('email', 'like', '%'.$keyword.'%')
 				->orWhere('description', 'like', '%'.$keyword.'%');
-			})->withCount('contents')->latest()->paginate(10);	
+			})
+		->whereNotNull('username')
+		->withCount('contents')->latest()->paginate(10);	
 		else
 			$users = $users->withCount(['contents' => function($q){
 				$q->published();
-			}])->latest()->paginate(10);
+			}])
+		->whereNotNull('username')
+		->latest()->paginate(10);
 		$oper = [
 			'data'	=> $users
 		]+$this->getRightMenu();

@@ -8,7 +8,7 @@ use Storage;
 class UserBio extends Model
 {
 	protected $guarded = [];
-	protected $appends = ['bd_view', 'gender_view', 'married_view', 'nin_upload_view', 'prov_name', 'city_name', 'region_name', 'village_name',];
+	protected $appends = ['bd_view', 'gender_view', 'married_view', 'nin_upload_view', 'prov_name', 'city_name', 'region_name', 'village_name','status_ktp','nin_upload_link','photo_link'];
 
 	public function prov()
 	{
@@ -86,19 +86,31 @@ class UserBio extends Model
 		return $this->village->Nama;
 	}
 
-	public function getPhotoAttribute($value)
+	public function getPhotoLinkAttribute()
 	{
+		$value = $this->photo;
 		if(!Storage::exists('public/'.$value) || $value === '' || $value === null){
 			return asset('images/photo.jpg');
 		}
 		return asset('storage/'.$value);
 	}
 
-	public function getNinUploadAttribute($value)
+	public function getNinUploadLinkAttribute()
 	{
+		$value = $this->nin_upload;
 		if(!Storage::exists('public/'.$value) || $value === '' || $value === null){
 			return asset('images/contoh_ktp.jpeg');
 		}
 		return asset('storage/'.$value);
+	}
+
+	public function getStatusKtpAttribute()
+	{
+		if($this->nin_valid == 0){
+			return 'Menunggu verifikasi';
+		}elseif($this->nin_valid == 1){
+			return 'Diterima';
+		}
+		return 'Ditolak';
 	}
 }

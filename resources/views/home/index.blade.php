@@ -70,5 +70,12 @@
 <script>
 	errorMsg('{{ session('msg') }}')
 </script>
+@elseif(session('error_msg'))
+<script>
+	errorMsg('{{ session('error_msg') }}')
+	@php
+	request()->session()->pull('error_msg');
+	@endphp
+</script>
 @endif
 @endpush

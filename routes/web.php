@@ -1,57 +1,43 @@
 <?php
 
-# USER PROFILE TANPA LOGIN
-Route::get('/profile/{username}', 'ListUserController@profile');
+Route::middleware('buat_aktivitas')->group(function(){
 
-Route::get('/clear-sliders', 'Admin\SliderController@clear');
+	# USER PROFILE TANPA LOGIN
+	Route::get('/profile/{username}', 'ListUserController@profile');
 
-Route::get('/reset', 'ResetController@execute');
-Route::view('/uji-coba', 'uji-coba');
+	Route::get('/clear-sliders', 'Admin\SliderController@clear');
 
-Route::group(['prefix' => 'administrator', 'namespace' => 'Admin', 'middleware' => ['admin']], function(){
+	Route::get('/contents/attachment/{url}', 'ContentController@attachment');
 
-	# MODERASI KONTEN
-	Route::group(['prefix' => 'content-moderate'], function(){
-		Route::get('/', 'ModerateController@index');
-		Route::get('/detail/{id}', 'ModerateController@detail');
-		Route::put('/update/{id}', 'ModerateController@update');
+	# MENU USER TANPA LOGIN
+	Route::get('/', 'HomeController@index');
+	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/user-verification/{id}', 'AutentikasiController@verifyForm');
+
+	Route::get('/login', 'AutentikasiController@loginForm')->name('user_login');
+
+	Route::group(['prefix' => 'contents'], function(){
+		Route::get('/', 'ContentController@contents');
+		Route::get('/with-category/{category}', 'ContentController@withCategory');
+		Route::get('/with-tag/{tag}', 'ContentController@withTag');
+		Route::get('/{content_kind}', 'ContentController@all')->name('contents');
+		Route::get('/{content_kind}/{content}', 'ContentController@detail')
+		->middleware('content')
+		->name('contents.detail');
 	});
 
-	# SETTING
-	Route::group(['prefix' => 'setting'], function(){
-		Route::put('/update-page-count', 'SettingController@updatePageCount');
+	Route::group(['prefix' => 'pages'], function(){
+		Route::get('/with-tag/{tag}', 'PageController@withTag');
+		Route::get('/{page_kind}', 'PageController@all');
+		Route::get('/{page_kind}/{url}', 'PageController@detail')->name('pages.detail');
 	});
-});
 
-Route::get('/contents/attachment/{url}', 'ContentController@attachment');
+	Route::group(['prefix' => 'feedback'], function(){
+		Route::get('/with-tag/{tag}', 'FeedbackController@withTag');
+		Route::get('/{feedback_kind}', 'FeedbackController@all');
+		Route::get('/{feedback_kind}/{feedback}', 'FeedbackController@detail')->name('feedback.detail');
+	});
 
-# MENU USER TANPA LOGIN
-Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/user-verification/{id}', 'AutentikasiController@verifyForm');
-
-Route::get('/login', 'AutentikasiController@loginForm')->name('user_login');
-
-Route::group(['prefix' => 'contents'], function(){
-	Route::get('/', 'ContentController@contents');
-	Route::get('/with-category/{category}', 'ContentController@withCategory');
-	Route::get('/with-tag/{tag}', 'ContentController@withTag');
-	Route::get('/{content_kind}', 'ContentController@all')->name('contents');
-	Route::get('/{content_kind}/{content}', 'ContentController@detail')
-	->middleware('content')
-	->name('contents.detail');
-});
-
-Route::group(['prefix' => 'pages'], function(){
-	Route::get('/with-tag/{tag}', 'PageController@withTag');
-	Route::get('/{page_kind}', 'PageController@all');
-	Route::get('/{page_kind}/{url}', 'PageController@detail')->name('pages.detail');
-});
-
-Route::group(['prefix' => 'feedback'], function(){
-	Route::get('/with-tag/{tag}', 'FeedbackController@withTag');
-	Route::get('/{feedback_kind}', 'FeedbackController@all');
-	Route::get('/{feedback_kind}/{feedback}', 'FeedbackController@detail')->name('feedback.detail');
 });
 
 //======================================================================================================//

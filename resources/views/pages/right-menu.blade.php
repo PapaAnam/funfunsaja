@@ -6,7 +6,7 @@
 		@foreach ($page_kinds as $c)
 		<li class="list-group-item border-danger pb-2 pt-2">
 			<i class="text-danger fa fa-arrow-right mr-2"></i>
-			<a class="text-danger" href="{{ $c->full_url }}">
+			<a class="text-danger" href="{{ $c->link }}">
 				{{ $c->name }}
 			</a>
 			<span class="float-right badge badge-danger badge-pill">{{ $c->pages_count }}</span>

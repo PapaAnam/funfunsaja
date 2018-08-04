@@ -76,5 +76,6 @@ class Kernel extends HttpKernel
         'complete_biography' => \App\Http\Middleware\CompleteBiography::class,
         'complete_bank_account' => \App\Http\Middleware\CompleteBankAccount::class,
         'admin' => \App\Http\Middleware\CustomGuard::class,
+        'buat_aktivitas'=>\App\Http\Middleware\BuatAktivitas::class,
     ];
 }

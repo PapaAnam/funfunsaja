@@ -15,7 +15,9 @@ class UserController extends Controller
 		return [
 			'admin'			=> $admins->where('role', 'admin')->values(),
 			'moderators'	=> $admins->where('role', 'moderator')->values(),
-			'members' 		=> User::all(),
+			'members' 		=> User::with(['bio'=>function($q){
+				$q->where('status','1');
+			}])->get()
 		];
 	}
 
