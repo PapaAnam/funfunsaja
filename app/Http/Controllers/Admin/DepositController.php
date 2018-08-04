@@ -140,12 +140,12 @@ class DepositController extends Controller
 			$user->balance += $depo->deposit;
 			$user->save();
 			Notification::create([
-				'title'=>'Pengambilan saldo diterima',
-				'content'=>'Selamat pengambilan saldo sebesar '.$depo->jumlah_disetujui.' berhasil diterima. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
+				'title'=>'Pengambilan saldo ditolak',
+				'content'=>'Pengambilan saldo tiket '.$depo->no_tiket.' sebesar '.$depo->jumlah_disetujui.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
 				'from_id'=>Auth::guard('admin')->id(),
 				'to_type'=>'0',
 				'to_id'=>$depo->user_id,
-				'type'=>'success'
+				'type'=>'danger'
 			]);
 		}else{
 			$depo->update([
@@ -155,12 +155,12 @@ class DepositController extends Controller
 				'tanggal_approve'=>date('Y-m-d')
 			]);
 			Notification::create([
-				'title'=>'Pengambilan saldo ditolak',
-				'content'=>'Pengambilan saldo sebesar '.$depo->jumlah_disetujui.' gagal dilakukan. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
+				'title'=>'Pengambilan saldo diterima',
+				'content'=>'Selamat pengambilan saldo tiket '.$depo->no_tiket.' sebesar '.$depo->jumlah_disetujui.' berhasil diterima. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>',
 				'from_id'=>Auth::guard('admin')->id(),
 				'to_type'=>'0',
 				'to_id'=>$depo->user_id,
-				'type'=>'danger'
+				'type'=>'success'
 			]);
 		}
 		return 'Pengambilan saldo berhasil '.($r->status == 2 ? 'ditolak' : 'diterima');
