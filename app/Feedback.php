@@ -103,7 +103,7 @@ class Feedback extends Model
 
     public function getLinkAttribute()
     {
-        return route('feedback.detail', [$this->kind->path, $this->url]);
+        return str_replace('feedback//', 'feedback/', route('feedback.detail', [$this->kind->path, $this->url]));
     }
 
     public function getFullUrlAttribute()

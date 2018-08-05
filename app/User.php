@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login', 'status_text'];
+    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login', 'status_text','avatar_link'];
     protected $casts = [
         'is_premium'    => 'boolean'
     ];
@@ -50,10 +50,12 @@ class User extends Authenticatable
         }
     }
 
-    public function getAvatarAttribute($value){
+    public function getAvatarLinkAttribute(){
+        $value = $this->avatar;
         $default = asset('images/user-default.png');
-        if(config('app.env') === 'production')
-            $default = 'https://www.gravatar.com/avatar/'.md5($this->email).'?d=wavatar&s=200';
+        if(config('app.env') === 'production'){
+            return Storage::exists('public/'.$value) && $value ? asset('storage/'.$value) : 'https://www.gravatar.com/avatar/'.md5($this->email).'?d=wavatar&s=200';
+        }
         return Storage::exists('public/'.$value) && $value ? asset('storage/'.$value) : $default;
     }
 

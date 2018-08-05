@@ -69,7 +69,7 @@ class Content extends Model
 
     public function getFullUrlAttribute()
     {
-        return $this->kind->full_url.'/'.$this->url;
+        return str_replace('contents//', 'contents/', $this->kind->full_url.'/'.$this->url);
     }
 
     public function getShortContentAttribute()
@@ -84,10 +84,10 @@ class Content extends Model
         });
     }
 
-    public function getRouteKeyName()
-    {
-        return 'url';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'url';
+    // }
 
     public function scopeData($q)
     {
@@ -101,7 +101,7 @@ class Content extends Model
 
     public function getLinkAttribute()
     {
-        return route('contents.detail', [$this->kind->path, $this->url]);
+        return str_replace('contents//', 'contents/', route('contents.detail', [$this->kind->path, $this->url]));
     }
 
     public function getCatUrlAttribute()

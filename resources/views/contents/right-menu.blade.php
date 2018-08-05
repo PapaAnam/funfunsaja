@@ -38,7 +38,7 @@
 					<small>{{ $p->kind->name }}</small>
 				</div>
 				<div class="col-sm-12">
-					<a class="text-dark" href="{{ route('contents.detail', [$p->kind->path, $p->url]) }}">{{ $p->title }}</a>
+					<a class="text-dark" href="{{ $p->link }}">{{ $p->title }}</a>
 				</div>
 			</div>
 		</li>
@@ -59,7 +59,7 @@
 					<small>{{ $p->kind->name }}</small>
 				</div>
 				<div class="col-sm-12">
-					<a class="text-dark" href="{{ route('contents.detail', [$p->kind->path, $p->url]) }}">{{ $p->title }}</a>
+					<a class="text-dark" href="{{ $p->link }}">{{ $p->title }}</a>
 				</div>
 			</div>
 		</li>
@@ -80,7 +80,7 @@
 					<small>{{ $p->kind->name }}</small>
 				</div>
 				<div class="col-sm-12">
-					<a class="text-dark" href="{{ route('contents.detail', [$p->kind->path, $p->url]) }}">{{ $p->title }}</a>
+					<a class="text-dark" href="{{ $p->link }}">{{ $p->title }}</a>
 				</div>
 			</div>
 		</li>

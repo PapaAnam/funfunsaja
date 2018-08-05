@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Route;
+use App\Content;
 
 class ContentMiddleware
 {
@@ -20,6 +21,7 @@ class ContentMiddleware
         $params     = Route::current()->parameters;
         $paramsName = Route::current()->parametersName;
         $content = $params['content'];
+        $content = Content::where('url', $content)->first();
         if($content->type === '1'){
             if(!$user){
                 return redirect('/login')->with('msg', 'Anda harus jadi member terlebih dahulu untuk melihat konten premium');

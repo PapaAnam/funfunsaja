@@ -97,7 +97,7 @@ Route::get('/upgrade-member-setting', 'Admin\SettingController@upMember');
 
 # LOGOUT
 Route::middleware('admin')->group(function(){
-	Route::get('/data-diri', 'DataDiriController@get');
+Route::get('/data-diri', 'DataDiriController@get');
 	Route::put('/data-diri/verifikasi-ktp/{user_bio}', 'DataDiriController@verifikasiKtp');
 	Route::put('/data-diri/tolak-ktp/{user_bio}', 'DataDiriController@tolakKtp');
 	Route::post('/logout', 'Auth\LoginController@logout');

@@ -89,6 +89,9 @@ class UserController extends Controller
 	public function update(UpdateUserProfile $r)
 	{
 		$data = $r->only([ 'username', 'description', 'web' ]);
+		if($r->file('avatar')){
+			$data['avatar'] = str_replace('public/', '', $r->file('avatar')->store('public/avatar'));
+		}
 		$r->user()->update($data);
 		$r->user()->activities()->create([
 			'title'		=> 'Profil',

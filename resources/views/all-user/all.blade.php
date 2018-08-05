@@ -39,7 +39,7 @@
 							<i class="fa fa-tags"></i> 
 							<hr>
 							<div>
-								<img class="mb-2 img-thumbnail rounded-circle float-left" style="max-width: 180px; max-height: 180px; margin-right: 20px;" src="{{ $a->avatar }}" alt="{{ $a->username }}">
+								<img class="mb-2 img-thumbnail rounded-circle float-left" style="max-width: 180px; max-height: 180px; margin-right: 20px;" src="{{ $a->avatar_link }}" alt="{{ $a->username }}">
 								<div class="text-justify" style="line-height: 20px;">
 									@if($a->description)
 									{!! $a->description !!}

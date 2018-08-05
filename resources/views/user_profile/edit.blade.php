@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Edit Profil'])
+@extends('layouts.app', ['title' => 'Ubah Profil'])
 @section('content')
 <br>
 <div class="container">
@@ -9,7 +9,7 @@
 				{{ session('message') }}
 			</div>
 			@endif
-			<h4>Profil Saya</h4>
+			<h4>Ubah Profil</h4>
 			<hr>
 			<a href="{{ url('user-profile') }}"><i class="fa fa-arrow-left"></i> Kembali</a>
 			<div class="card">
@@ -29,6 +29,9 @@
 									'value' => $user['description']
 								])
 								@endcomponent
+							</div>
+							<div class="col-md-6">
+								<inp type="image" id="avatar" label="Avatar" />
 							</div>
 							<div class="col-md-12">
 								<update-profile></update-profile>

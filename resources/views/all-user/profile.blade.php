@@ -13,7 +13,7 @@
 			</button>
 			<div class="row">
 				<div class="col-md-4">
-					<img class="mb-2 img-thumbnail rounded-circle" style="max-width: 180px; max-height: 180px;" src="{{ $user->avatar }}" alt="{{ $user->username }}">
+					<img class="mb-2 img-thumbnail rounded-circle" style="max-width: 180px; max-height: 180px;" src="{{ $user->avatar_link }}" alt="{{ $user->username }}">
 					<button class="btn btn-outline-danger btn-block">
 						Status
 						@if($user->status === '0')

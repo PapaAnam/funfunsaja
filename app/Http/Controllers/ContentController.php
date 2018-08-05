@@ -216,8 +216,9 @@ class ContentController extends Controller
 		];
 	}
 
-	public function detail($content_kind_url, Content $content)
+	public function detail($content_kind_url, $url)
 	{
+		$content = Content::where('url', $url)->first();
 		$ck = ContentKind::where('path', 'like', '%'.$content_kind_url.'%')->first();
 		if(!$ck)
 			abort(404);
