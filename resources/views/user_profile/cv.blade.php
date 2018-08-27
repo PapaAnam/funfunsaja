@@ -4,7 +4,7 @@
 		@if($biography)
 		<my-cv>
 			<h1>CURRICULUM <span class="blue">VITAE</span></h1>
-			<img class="gambar" src="{{ $my_bio->photo }}">
+			<img class="gambar" src="{{ $my_bio->photo_link }}">
 			<table>
 				<tbody>
 					@if($my_bio)

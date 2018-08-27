@@ -26,7 +26,8 @@ class UpdateContent extends FormRequest
      */
     public function rules()
     {
-        $c              = Route::current()->parameters['content'];
+        $url              = Route::current()->parameters['content'];
+        $c = Content::where('url', $url)->first();
         $file           = 'public/'.$c->thumbnail;
         $thumbIsNull    = !Storage::exists($file) || !$c->thumbnail;
         return [

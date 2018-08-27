@@ -35,7 +35,7 @@
 		['view', ['fullscreen', 'codeview', 'help']]
 		],
 	})
-	$('#content').summernote('code', '{{ $comment->content }}')
+	$('#content').summernote('code', '{!! $comment->content !!}')
 </script>
 @endpush
 

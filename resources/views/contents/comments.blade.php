@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="lancip">
-			<img class="img-thumbnail rounded-circle" src="{{ $comment->user->avatar }}" alt="{{ $comment->user->username }}">
+			<img class="img-thumbnail rounded-circle" src="{{ $comment->user->avatar_link }}" alt="{{ $comment->user->username }}">
 		</div>
 		<div class="card mt-4">
 			<div class="card-header">

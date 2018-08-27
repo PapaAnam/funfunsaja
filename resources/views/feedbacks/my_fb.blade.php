@@ -2,7 +2,7 @@
 @section('content')
 <br>
 @component('content', ['judul' => 'Masukan Saya'])
-<a class="btn btn-primary btn-sm" href="{{ route('create_feedbacks') }}">Buat Masukan Baru</a>
+<a class="btn btn-danger btn-sm" href="{{ route('create_feedbacks') }}">Masukan Baru</a>
 <br>
 <br>
 <div class="card">
@@ -50,7 +50,7 @@
 				</td>
 				<td>
 					@if($d->status == 'published')
-					<a data-toggle="tooltip" title="Lihat" target="_blank" href="{{ url($d->kind->url.'/'.$d->url) }}" class="btn btn-success btn-sm">
+					<a data-toggle="tooltip" title="Lihat" target="_blank" href="{{ $d->full_url }}" class="btn btn-success btn-sm">
 						<i class="fa fa-eye"></i>
 					</a>
 					@elseif($d->status == 'rejected' || $d->status == 'draft')

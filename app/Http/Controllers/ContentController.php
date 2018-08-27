@@ -83,8 +83,9 @@ class ContentController extends Controller
 		return response()->download(storage_path('app/public/'.$content->attachment));
 	}
 
-	public function edit(Content $content)
+	public function edit($url)
 	{
+		$content = Content::where('url', $url)->first();
 		$c = $content;
 		if($c->status == 'published' || $c->status == 'waiting')
 			abort(404);
@@ -101,9 +102,9 @@ class ContentController extends Controller
 		return view('contents.edit', $oper);
 	}
 
-	public function update(Content $content, UpdateContent $r)
+	public function update($url, UpdateContent $r)
 	{
-		$c = $content;
+		$c = Content::where('url', $url)->first();
 		if($c->status == 'published' || $c->status == 'waiting' || $c->user_id != Auth::id()){
 			abort(404);
 		}
@@ -239,10 +240,10 @@ class ContentController extends Controller
 		return abort(404);
 	}
 
-	public function alert($ck, Content $content)
+	public function alert($ck, $url)
 	{
-		$ck = ContentKind::whereUrl('/contents/'.$ck)->first();
-		$content = Content::where('url', $content->url)->with('user')->first();
+		$ck = ContentKind::where('path', 'like', '%'.$ck)->first();
+		$content = Content::where('url', $url)->with('user')->first();
 		$oper = [
 			'content' 	=> $content,
 			'modul'		=> $ck->name,

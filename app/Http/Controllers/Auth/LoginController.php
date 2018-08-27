@@ -78,6 +78,7 @@ class LoginController extends Controller
                 ]);
                 Auth::guard('admin')->user()->update([
                     'must_logout'   => date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days')),
+                    'aktivitas_terakhir'=>date('Y-m-d H:i:s'),
                 ]);
                 return $this->sendLoginResponse($r);
             }

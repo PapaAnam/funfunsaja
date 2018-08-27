@@ -2,7 +2,7 @@
 @section('content')
 <br>
 @component('content', ['judul' => 'Konten Saya'])
-<a class="btn btn-primary btn-sm" href="{{ route('create_content') }}">Buat Konten Baru</a>
+<a class="btn btn-danger btn-sm" href="{{ route('create_content') }}">Konten Baru</a>
 <br>
 <br>
 <div class="card">
@@ -44,15 +44,15 @@
 					@if($d->comments_count == 0)
 					<span class="badge badge-danger">{{ $d->comments_count }}</span>
 					@else
-					<a href="{{ route('comment', $d->url) }}">
+					{{-- <a href="{{ route('comment', $d->url) }}"> --}}
 						<span class="badge badge-success">{{ $d->comments_count }}</span>
-					</a>
+					{{-- </a> --}}
 					@endif
 					@endif
 				</td>
 				<td>
 					@if($d->is_published)
-					<a data-toggle="tooltip" title="Lihat" target="_blank" href="{{ url($d->kind->url.'/'.$d->url) }}" class="btn btn-success btn-sm">
+					<a data-toggle="tooltip" title="Lihat" target="_blank" href="{{ $d->link }}" class="btn btn-success btn-sm">
 						<i class="fa fa-eye"></i>
 					</a>
 					@elseif($d->is_draft || $d->is_rejected)

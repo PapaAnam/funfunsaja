@@ -19,10 +19,10 @@
 			<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 				@if(Auth::id() == $user['id'])
 				<li class="nav-item">
-					<a class="nav-link active" id="bio-tab" data-toggle="pill" href="#bio" role="tab" aria-controls="bio" aria-selected="true">Data Diri</a>
+					<a class="nav-link {{ request()->query('active') ? '' : 'active' }}" id="bio-tab" data-toggle="pill" href="#bio" role="tab" aria-controls="bio" aria-selected="true">Data Diri</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link {{ session('active') == 'biodata' ? 'active' : '' }}" id="biodata-tab" data-toggle="pill" href="#biodata" role="tab" aria-controls="biodata" aria-selected="true">Biodata</a>
+					<a class="nav-link {{ request()->query('active') == 'biodata' || session('active') == 'biodata' ? 'active' : '' }}" id="biodata-tab" data-toggle="pill" href="#biodata" role="tab" aria-controls="biodata" aria-selected="true">Biodata</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link {{ session('active') == 'biography' ? 'active' : '' }}" id="biography-tab" data-toggle="pill" href="#biography" role="tab" aria-controls="biography" aria-selected="true">Biografi</a>
@@ -37,10 +37,10 @@
 			</ul>
 			<div class="tab-content" id="pills-tabContent">
 				@if(Auth::id() == $user['id'])
-				<div class="tab-pane fade show active" id="bio" role="tabpanel" aria-labelledby="bio-tab">
+				<div class="tab-pane fade show {{ request()->query('active') ? '' : 'active' }}" id="bio" role="tabpanel" aria-labelledby="bio-tab">
 					<my-bio :data="{{ $my_bio ? $my_bio : json_encode([]) }}" :provinces="{{ $provinces }}" :cities="{{ $cities }}" :regions="{{ $regions }}" :villages="{{ $villages }}"></my-bio>
 				</div>
-				<div class="tab-pane fade show {{ session('active') == 'biodata' ? 'active' : '' }}" id="biodata" role="tabpanel" aria-labelledby="biodata-tab">
+				<div class="tab-pane fade show {{ request()->query('active') == 'biodata' || session('active') == 'biodata' ? 'active' : '' }}" id="biodata" role="tabpanel" aria-labelledby="biodata-tab">
 					<my-biodata :data="{{ $biodata ? $biodata : json_encode([]) }}" :skills="{{ $skills ? $skills : [] }}" :passions="{{ $passions ? $passions : [] }}" :hobbies="{{ $hobbies ? $hobbies : [] }}" :languages="{{ $languages ? $languages : [] }}" :characters="{{ $characters ? $characters : [] }}"></my-biodata>
 				</div>
 				<div class="tab-pane fade show {{ session('active') == 'biography' ? 'active' : '' }}" id="biography" role="tabpanel" aria-labelledby="biography-tab">

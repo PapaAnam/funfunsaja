@@ -62,8 +62,9 @@ class CommentController extends Controller
 		return response('Tanggapan berhasil disimpan. Menunggu moderasi admin.', 200);
 	}
 
-	public function post(Content $content, Request $r)
+	public function post($url, Request $r)
 	{
+		$content = Content::where('url', $url)->first();
 		return $this->generate($r, $content);	
 	}
 
@@ -182,8 +183,9 @@ class CommentController extends Controller
 		];
 	}
 
-	public function mineInContentEdit(Content $content, Comment $comment)
+	public function mineInContentEdit($url, Comment $comment)
 	{
+		$content = Content::where('url', $url)->first();
 		$oper = $this->generateEdit($comment);
 		return view('comments.on_content_edit', $oper);
 	}
@@ -203,8 +205,9 @@ class CommentController extends Controller
 		return view('comments.on_feedback_edit', $oper);
 	}
 
-	public function setTerbaik(Comment $comment, Content $content)
+	public function setTerbaik(Comment $comment, $url)
 	{
+		$content = Content::where('url',$url)->first();
 		$content->comments()->update([
 			'is_best' => '0',
 		]);

@@ -77,5 +77,7 @@ class Kernel extends HttpKernel
         'complete_bank_account' => \App\Http\Middleware\CompleteBankAccount::class,
         'admin' => \App\Http\Middleware\CustomGuard::class,
         'buat_aktivitas'=>\App\Http\Middleware\BuatAktivitas::class,
+        'admin_must_logout'=>\App\Http\Middleware\AdminMustLogout::class,
+        'admin_buat_aktivitas'=>\App\Http\Middleware\AdminBuatAktivitas::class,
     ];
 }
