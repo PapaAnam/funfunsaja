@@ -21,7 +21,7 @@ class LoginController extends Controller
 			$existAndActive = $usr->status == '1';
 			if($existAndActive){
 				$sudah30menit = strtotime(date('Y-m-d H:i:s')) - strtotime($usr->aktivitas_terakhir) > 1800;
-				if($sudah30menit || is_null($sr->aktivitas_terakhir)){
+				if($sudah30menit || is_null($usr->aktivitas_terakhir)){
 					User::find($usr->id)->update([
 						'logged_in'=>'0'
 					]);
