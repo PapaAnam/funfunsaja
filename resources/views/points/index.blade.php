@@ -59,7 +59,7 @@
 								</tr>
 								<tr>
 									<td>Tanggal klaim saldo</td>
-									<td>{{ $ps['schedule'] }} tiap bulan</td>
+									<td>tanggal {{ $ps['schedule'] }} tiap bulan</td>
 								</tr>
 								<tr>
 									<td>Status Waktu</td>
@@ -92,14 +92,14 @@
 								</tr>
 								<tr>
 									<td>Saldo yang didapat</td>
-									<td>{{ $ps['result']*Auth::user()->point }}</td>
+									<td>{{ number_format($ps['result']*Auth::user()->point, 0, ',', '.') }}</td>
 								</tr>
 							</tbody>
 							@endcomponent
 						</div>
 						@if($open)
 						<div class="card-footer">
-							@if(Auth::user()->point > $ps['min'])
+							@if(Auth::user()->point >= $ps['min'])
 							<claim-btn></claim-btn>
 							@else
 							<span class="badge badge-danger">Poin tidak memenuhi minimal klaim</span>
