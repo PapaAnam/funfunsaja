@@ -24,6 +24,7 @@ use App\Content;
 use App\Traits\Token;
 use App\Events\SendLinkAndSms;
 use App\UserBio;
+use App\DepositTransaction;
 
 class UserController extends Controller
 {
@@ -360,7 +361,33 @@ class UserController extends Controller
 			'until' 	=> $until,
 			'cost' 		=> $r->cost,
 		]);
-
+		$month = date('m');
+		switch ($month) {
+            case '01': $month = 'Januari'; break;
+            case '02': $month = 'Februari'; break;
+            case '03': $month = 'Maret'; break;
+            case '04': $month = 'April'; break;
+            case '05': $month = 'Mei'; break;
+            case '06': $month = 'Juni'; break;
+            case '07': $month = 'Juli'; break;
+            case '08': $month = 'Agustus'; break;
+            case '09': $month = 'September'; break;
+            case '10': $month = 'Oktober'; break;
+            case '11': $month = 'November'; break;
+            case '12': $month = 'Desember'; break;
+            default: $month = 'Tidak valid!!!'; break;
+        }
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
+		DepositTransaction::create([
+			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
+			'user_id'=>$u->id,
+			'deposit'=>$r->cost,
+			'jenis_transaksi'=>'Upgrade member',
+			'jumlah_disetujui'=>$r->cost,
+			'status'=>'By sistem',
+			'tanggal_approve'=>date('Y-m-d'),
+			'reason'=>'Upgrade member '.$periode.' bulan per '.date('d').' '.$month.' '.date('Y'),
+		]);
 		$u->activities()->generate('Upgrade Member', 'Melakukan upgrade member ke premium selama '.$periode.' bulan', Auth::id());
 		return 'Upgrade member berhasil';
 	}
