@@ -14,6 +14,7 @@ use App\Content;
 use App\User;
 use Storage;
 use App\Tag;
+use App\DepositTransaction;
 use Auth;
 
 class ContentController extends Controller
@@ -279,6 +280,28 @@ class ContentController extends Controller
 			'user_id'	=> Auth::id(),
 			'title'		=> 'Pembelian Konten',
 			'content'	=> 'Membeli konten premium dengan judul '.$content->title,
+		]);
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
+		DepositTransaction::create([
+			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
+			'user_id'=>$user->id,
+			'deposit'=>$fee,
+			'jenis_transaksi'=>'Pembelian konten',
+			'jumlah_disetujui'=>$fee,
+			'status'=>'By sistem',
+			'tanggal_approve'=>date('Y-m-d'),
+			'reason'=>'Konten <a href="'.$content->full_url.'">'.$content->title.'</a>',
+		]);
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
+		DepositTransaction::create([
+			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
+			'user_id'=>$content->user_id,
+			'deposit'=>$fee,
+			'jenis_transaksi'=>'Penjualan konten',
+			'jumlah_disetujui'=>$fee,
+			'status'=>'By sistem',
+			'tanggal_approve'=>date('Y-m-d'),
+			'reason'=>'Konten <a href="'.$content->full_url.'">'.$content->title.'</a>',
 		]);
 		$oper = [
 			'content'	=> $content,
