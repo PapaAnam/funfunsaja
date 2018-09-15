@@ -39,10 +39,12 @@ class PointController extends Controller
 				]
 			], 422);
 		$point = $r->point;
-		PointClaim::create([
+		$pointCreate = PointClaim::create([
 			'point'				=> $r->point,
 			'deposit_per_point'	=> $r->result,
 			'user_id'			=> $u->id,
+			'min_point_ditukar'=>$sp['min'],
+			'point_yang_dipunya'=>$u->point,
 		]);
 		$total 		 = $r->point * $r->result;
 		$u->balance += $total;
@@ -52,20 +54,20 @@ class PointController extends Controller
 		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
 		$month = date('m');
 		switch ($month) {
-            case '01': $month = 'Januari'; break;
-            case '02': $month = 'Februari'; break;
-            case '03': $month = 'Maret'; break;
-            case '04': $month = 'April'; break;
-            case '05': $month = 'Mei'; break;
-            case '06': $month = 'Juni'; break;
-            case '07': $month = 'Juli'; break;
-            case '08': $month = 'Agustus'; break;
-            case '09': $month = 'September'; break;
-            case '10': $month = 'Oktober'; break;
-            case '11': $month = 'November'; break;
-            case '12': $month = 'Desember'; break;
-            default: $month = 'Tidak valid!!!'; break;
-        }
+			case '01': $month = 'Januari'; break;
+			case '02': $month = 'Februari'; break;
+			case '03': $month = 'Maret'; break;
+			case '04': $month = 'April'; break;
+			case '05': $month = 'Mei'; break;
+			case '06': $month = 'Juni'; break;
+			case '07': $month = 'Juli'; break;
+			case '08': $month = 'Agustus'; break;
+			case '09': $month = 'September'; break;
+			case '10': $month = 'Oktober'; break;
+			case '11': $month = 'November'; break;
+			case '12': $month = 'Desember'; break;
+			default: $month = 'Tidak valid!!!'; break;
+		}
 		DepositTransaction::create([
 			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
 			'user_id'=>$u->id,
@@ -75,6 +77,7 @@ class PointController extends Controller
 			'status'=>'By sistem',
 			'tanggal_approve'=>date('Y-m-d'),
 			'reason'=>'Penukaran poin sebanyak '.$point.' poin bulan '.$month.' '.date('Y'),
+			'point_claim_id'=>$pointCreate->id,
 		]);
 		return 'Poin berhasil di klaim';
 	}

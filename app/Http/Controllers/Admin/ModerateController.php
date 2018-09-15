@@ -35,16 +35,16 @@ class ModerateController extends Controller
     public function update($id, ModerateContent $r)
     {
         $con = Content::find($id);
-        $published = $r->status == '4';
+        $published = $r->status == 'published';
         $title = $published ? 'Konten dipublikasi.' : 'Konten ditolak';
-        $content = $r->status == '4' ? 'Selamat konten berhasil dipublikasi.' : 'Mohon maaf konten anda ditolak';
+        $content = $r->status == 'published' ? 'Selamat konten berhasil dipublikasi.' : 'Mohon maaf konten anda ditolak';
         Notification::create([
             'title'     => $title,
             'content'   => $content,
             'from_type' => '1',
             'from_id'   => Auth::guard('admin')->id(),
             'to_id'     => $con->user_id,
-            'type'      => $r->status == '4' ? 'success' : 'danger'
+            'type'      => $published ? 'success' : 'danger'
         ]);
         Activity::create([
             'user_id'   => Auth::guard('admin')->id(),
@@ -59,7 +59,7 @@ class ModerateController extends Controller
         $con->update([
             'status' => $r->status
         ]);
-        if($r->status == '4'){
+        if($published){
             Point::create([
                 'user_id'       => $con->user_id,
                 'point'         => $point,
@@ -67,6 +67,6 @@ class ModerateController extends Controller
                 'content_id'    => $con->id,
             ]);
         }
-        return $r->status == '4' ? 'Konten berhasil diterima.' : 'Konten berhasil ditolak';
+        return $published ? 'Konten berhasil dipublikasi.' : 'Konten berhasil ditolak';
     }
 }

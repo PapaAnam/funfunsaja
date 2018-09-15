@@ -20,7 +20,7 @@ class DepositTransactionController extends Controller
 			'data' 			=> $deposits,
 			'receivers' 	=> $receivers,
 			'claim_logs'	=> $claim_logs,
-			'tiket'=>DepositTransaction::where('status', 'Order')->where('user_id', Auth::id())->get(),
+			'tiket'=>DepositTransaction::where('jenis_transaksi', 'Pesan Saldo')->where('user_id', Auth::id())->get(),
 		];
 		return view('balance_transactions.index', $oper);
 	}
@@ -43,16 +43,18 @@ class DepositTransactionController extends Controller
 		$r->validate([
 			'deposit'=>'required|numeric|min:50000'
 		]);
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
 		$data = [
 			'user_id' 	=> Auth::id(),
-			'jenis_transaksi'=>'Pesan Saldo'
+			'jenis_transaksi'=>'Pesan Saldo',
+			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
 		];
 		Activity::create([
 			'user_id'	=> Auth::id(),
 			'title'		=> 'Pesan saldo',
 			'content'	=> 'Memesan saldo sebesar '.number_format($r->deposit,0,',','.')
 		]);
-		DepositTransaction::create($data+$r->except(['transfer']));
+		DepositTransaction::create($data+$r->except(['transfer','no_tiket']));
 		return response('Pesan saldo berhasil dilakukan. Ditunggu pembayarannya');
 	}
 
@@ -108,12 +110,16 @@ class DepositTransactionController extends Controller
 		$r->validate([
 			'diambil'	=> 'required|numeric|min:50000|max:99999999',
 		]);
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
 		$u = $r->user()->transaksiSaldo()->create([
 			'deposit'=>$r->diambil,
-			'no_tiket'=>$r->no_tiket,
+			'no_tiket'=>is_null($dp) ? 1 : ++$dp->no_tiket,
 			'jenis_transaksi'=>'Ambil Saldo',
 			'status'=>'Konfirm',
 		]);
+		$user = $r->user();
+		$user->balance -= $r->diambil;
+		$user->save();
 		// $u->depoClaimLogs()->create([
 		// 	'deposit'	=> $r->diambil
 		// ]);
@@ -121,5 +127,11 @@ class DepositTransactionController extends Controller
 		// $u->save();
 		$r->user()->activities()->generate('Ambil Saldo', 'Pengambilan saldo sebesar '.number_format($r->diambil,0,',','.'), $r->user()->id);
 		return 'Pengambilan saldo berhasil dilakukan. Menunggu verifikasi admin.';
+	}
+
+	public function noTiketTerbaru()
+	{
+		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
+		return is_null($dp) ? 1 : ++$dp->no_tiket;
 	}
 }

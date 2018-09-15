@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PointClaim extends Model
 {
-	protected $fillable = ['user_id', 'point', 'deposit_per_point',] ;
+	protected $fillable = [
+		'user_id', 'point', 'deposit_per_point',
+		'min_point_ditukar',
+		'point_yang_dipunya',
+	] ;
 
 	public function scopeMine($q, $user)
 	{

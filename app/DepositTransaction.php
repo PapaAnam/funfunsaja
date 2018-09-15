@@ -46,6 +46,21 @@ class DepositTransaction extends Model
 		return $this->belongsTo('App\BankAccount', 'receiver');
 	}
 
+	public function kontenpremium()
+	{
+		return $this->belongsTo('App\BoughtContent', 'premium_content_id');
+	}
+
+	public function pointclaim()
+	{
+		return $this->belongsTo("App\PointClaim", 'point_claim_id');
+	}
+
+	public function upgrademember()
+	{
+		return $this->belongsTo("App\PremiumLog", 'premium_log_id');
+	}
+
 	public function scopeDashboard($q)
 	{
 		return $q->with('user')->where('status', '0')->take(5)->latest()->get();

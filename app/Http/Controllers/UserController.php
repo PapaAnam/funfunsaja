@@ -356,7 +356,7 @@ class UserController extends Controller
 		$until 			  = date('Y-m-d H:i:s', strtotime('+'.$periode.' months'));
 		$u->premium_until = $until;
 		$u->save();
-		$u->premiumLogs()->create([
+		$pl = $u->premiumLogs()->create([
 			'periode' 	=> $periode,
 			'until' 	=> $until,
 			'cost' 		=> $r->cost,
@@ -387,6 +387,7 @@ class UserController extends Controller
 			'status'=>'By sistem',
 			'tanggal_approve'=>date('Y-m-d'),
 			'reason'=>'Upgrade member '.$periode.' bulan per '.date('d').' '.$month.' '.date('Y'),
+			'premium_log_id'=>$pl->id,
 		]);
 		$u->activities()->generate('Upgrade Member', 'Melakukan upgrade member ke premium selama '.$periode.' bulan', Auth::id());
 		return 'Upgrade member berhasil';

@@ -1,5 +1,14 @@
 @component('card_simple')
 @if(count($data) > 0)
+<style>
+.page-item.active .page-link {
+	background-color: #dc3545 !important;
+	border-color: #dc3545 !important;
+}
+.page-link {
+    color: #dc3545 !important;
+}
+</style>
 <div class="row">
 	<div class="col-md-12">
 		@component('table')

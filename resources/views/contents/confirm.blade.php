@@ -46,7 +46,7 @@
 								<span class="badge badge-success">
 									Tidak Cukup	
 								</span>
-								<a href="{{ route('my_deposit') }}">Beli Saldo</a>
+								<a href="{{ route('transaksi-saldo') }}">Beli Saldo</a>
 								@endif
 							</td>
 						</tr>

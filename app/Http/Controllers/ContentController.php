@@ -270,7 +270,7 @@ class ContentController extends Controller
 		$author->balance += (70 / 100 * $fee);
 		$author->save();
 
-		BoughtContent::create([
+		$bought = BoughtContent::create([
 			'user_id'		=> $user->id,
 			'content_id'	=> $content->id,
 			'price'			=> $fee,
@@ -291,6 +291,7 @@ class ContentController extends Controller
 			'status'=>'By sistem',
 			'tanggal_approve'=>date('Y-m-d'),
 			'reason'=>'Konten <a href="'.$content->full_url.'">'.$content->title.'</a>',
+			'premium_content_id'=>$bought->id,
 		]);
 		$dp = DepositTransaction::orderBy('no_tiket', 'desc')->first();
 		DepositTransaction::create([
@@ -302,6 +303,7 @@ class ContentController extends Controller
 			'status'=>'By sistem',
 			'tanggal_approve'=>date('Y-m-d'),
 			'reason'=>'Konten <a href="'.$content->full_url.'">'.$content->title.'</a>',
+			'premium_content_id'=>$bought->id,
 		]);
 		$oper = [
 			'content'	=> $content,

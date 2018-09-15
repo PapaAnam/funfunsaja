@@ -2,6 +2,7 @@
 
 # GET LOGO
 Route::get('/logo', 'Admin\WebSettingController@logo');
+Route::get('/no-tiket-terbaru', 'DepositTransactionController@noTiketTerbaru');
 
 Route::post('/upload-snote', 'SummernoteController');
 

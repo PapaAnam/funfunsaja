@@ -156,6 +156,19 @@ Route::middleware('admin_must_logout')->group(function(){
 		// ambil saldo
 		Route::put('/ambil-saldo/verifikasi/{depo}', 'DepositController@claimVerify');
 
+		// klaim saldo
+		Route::get('/klaim-saldo', 'KlaimSaldoController@index');
+
+		// upgrade member
+		Route::get('/upgrade-member', 'UpgradeMemberController@index');
+
+		// fee konten
+		Route::get('/fee-konten', 'FeeKontenController@index');
+
+		// view konten
+		Route::get('/view-konten', 'ViewKontenController@index');
+		
+
 		# TANGGAPAN
 		Route::prefix('comments')->group(function(){
 			Route::get('/today', 'CommentController@index');
