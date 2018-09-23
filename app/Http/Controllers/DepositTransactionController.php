@@ -20,7 +20,7 @@ class DepositTransactionController extends Controller
 			'data' 			=> $deposits,
 			'receivers' 	=> $receivers,
 			'claim_logs'	=> $claim_logs,
-			'tiket'=>DepositTransaction::where('jenis_transaksi', 'Pesan Saldo')->where('user_id', Auth::id())->get(),
+			'tiket'=>DepositTransaction::where('jenis_transaksi', 'Pesan Saldo')->where('user_id', Auth::id())->whereNull('status')->get(),
 		];
 		return view('balance_transactions.index', $oper);
 	}

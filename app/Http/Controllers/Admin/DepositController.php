@@ -90,12 +90,12 @@ class DepositController extends Controller
 			'tanggal_approve'=>date('Y-m-d'),
 			'jumlah_disetujui'=>$r->status == 2 ? 0 : $r->jumlah_disetujui
 		]);
-		// if($r->status == 1){
-		// 	$u = User::find($depo->user_id);
-		// 	$u->update([
-		// 		'balance' => $u->saldo+$depo->jumlah_disetujui
-		// 	]);
-		// }
+		if($r->status == 1){
+			$u = User::find($depo->user_id);
+			$u->update([
+				'balance' => $u->balance+$depo->jumlah_disetujui
+			]);
+		}
 		$msg 	= 'Selamat pembelian saldo sebesar '.$depo->jumlah_disetujui.' berhasil diverifikasi dan dimasukkan ke dalam saldo anda. <a href="'.route('transaksi-saldo').'">Transaksi Saldo</a>';
 		$title 	= 'Beli saldo diterima';
 		$type 	= 'success';
