@@ -44,6 +44,7 @@
 <script>
 	$(document).ready(function(e){
 		$('[data-toggle="tooltip"]').tooltip();
+		$('[data-title=Setujui]').removeClass('btn-danger').addClass('btn-primary');
 	});
 </script>
 @endpush

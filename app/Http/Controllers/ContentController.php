@@ -139,8 +139,9 @@ class ContentController extends Controller
 		return $r->status == 'waiting' ? 'Konten berhasil dipublish. Menunggu persetujuan administrator' : 'Konten berhasil dimasukkan ke draft';
 	}
 
-	public function delete(Content $content)
+	public function delete(String $url)
 	{
+		$content = Content::where('url', $url)->first();
 		$content->delete();
 		Activity::create([
 			'user_id'	=> Auth::id(),

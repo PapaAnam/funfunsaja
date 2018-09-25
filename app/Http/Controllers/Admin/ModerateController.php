@@ -23,9 +23,9 @@ class ModerateController extends Controller
     	return view('admin.moderate.index', $oper);
     }
 
-    public function preview(Content $content)
+    public function preview($url)
     {
-        $content = $content->with(['user', 'kind', 'cat'])->first();
+        $content = Content::with(['user', 'kind', 'cat'])->where('url', $url)->first();
     	$oper = [
     		'content' => $content
     	];
