@@ -39,6 +39,7 @@ class UpdateUserBio extends FormRequest
             'post_code' => 'required|numeric|min:10000|max:99999',
             'married' => 'required|min:0|max:1',
             'nin_upload' => $nin_upload_exist ? 'nullable|file|mimes:jpeg,png|max:2000' : 'required|file|mimes:jpeg,png|max:2000',
+            'photo' => 'required|file|mimes:jpeg,png|max:2000',
         ];
     }
 
