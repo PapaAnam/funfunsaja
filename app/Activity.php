@@ -10,7 +10,7 @@ class Activity extends Model
     $appends = ['is_member', 'username', 'user_role'];
 
     protected $casts = [
-        'user_type' => 'int'
+        'user_type' => 'int',
     ];
 
     public function scopeMyActivities($q, $user)
