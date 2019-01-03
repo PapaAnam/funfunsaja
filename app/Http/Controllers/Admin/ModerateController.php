@@ -11,6 +11,7 @@ use App\Content;
 use App\Point;
 use Auth;
 use App\Activity;
+use App\Admin\AktivitasModerasi;
 
 class ModerateController extends Controller
 {
@@ -34,6 +35,8 @@ class ModerateController extends Controller
 
     public function update($id, ModerateContent $r)
     {
+        // return Auth::guard('admin')->id();
+        // return Auth::guard('admin_api')->user();
         $con = Content::find($id);
         $published = $r->status == 'published';
         $title = $published ? 'Konten dipublikasi.' : 'Konten ditolak';
@@ -46,12 +49,11 @@ class ModerateController extends Controller
             'to_id'     => $con->user_id,
             'type'      => $published ? 'success' : 'danger'
         ]);
-        Activity::create([
-            'user_id'   => Auth::guard('admin')->id(),
-            'user_type' => '1',
-            'title'     => 'Moderasi Konten',
-            'content'   => $published ? 'Mempublikasi konten yang berjudul <a href="'.$con->full_url.'">'.$con->title.'</a>' : 'Menolak konten yang berjudul '.$con->title,
-        ]);
+        $aktivitas = new AktivitasModerasi();
+        $aktivitas->admin_id    = Auth::guard('admin')->id();
+        $aktivitas->judul       = 'Moderasi Konten';
+        $aktivitas->isi         = $published ? 'Mempublikasi konten yang berjudul <a href="'.$con->full_url.'">'.$con->title.'</a>' : 'Menolak konten yang berjudul '.$con->title;
+        $aktivitas->save();
         $point = Setting::pointGet();
         $u = $con->user()->first();
         $u->point += $point;

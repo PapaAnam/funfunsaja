@@ -11,6 +11,6 @@ class ModerateActivityController extends Controller
 
     protected function model()
     {
-    	return \App\Activity::with('admin')->where('title', 'LIKE', 'Moderasi%');
+    	return \App\Admin\AktivitasModerasi::with('admin');
     }
 }

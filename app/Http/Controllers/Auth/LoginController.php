@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use Validator;
 use Auth;
+use Hash;
 
 class LoginController extends Controller
 {
@@ -49,56 +50,43 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function username()
+    public function login(Request $request)
     {
-        return 'username';
-    }
-
-    public function guard()
-    {
-        return Auth::guard('admin');
-    }
-
-    public function login(Request $r)
-    {
-        $validator = Validator::make($r->all(),[]);
-        if(Admin::where('username', $r->username)->count()){
-            $this->validateLogin($r);
-            if ($this->hasTooManyLoginAttempts($r)) {
-                $this->fireLockoutEvent($r);
-                return $this->sendLockoutResponse($r);
-            }
-
-            if ($this->attemptLogin($r)) {
-                Auth::logout();
-                Auth::guard('admin')->user()->activities()->create([
-                    'title'     => 'Masuk',
-                    'content'   => 'Masuk pada website',
-                    'user_type' => '1'
-                ]);
-                Auth::guard('admin')->user()->update([
-                    'must_logout'   => date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days')),
-                    'aktivitas_terakhir'=>date('Y-m-d H:i:s'),
-                ]);
-                return $this->sendLoginResponse($r);
-            }
-            $this->incrementLoginAttempts($r);
-            $validator->after(function($v){
-                $v->errors()->add('password', 'password salah');
-            });
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        $validator->after(function($v){
-            $v->errors()->add('username', 'username tidak ada');
-        });
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
-
-    protected function attemptLogin(Request $request)
-    {
-        return $this->guard()->attempt(
-            $this->credentials($request), true
-        );
+        $admin = null;
+        $request->validate([
+            'username'=>[
+                'required',
+                function($attribute, $value, $fail) use (&$admin, $request){
+                    $admin = Admin::where('username', $request->username)->first();
+                    if (is_null($admin)) {
+                        return $fail('User tidak ada.');
+                    }
+                },
+            ],
+            'password'=>[
+                'required',
+                function($attribute, $value, $fail) use (&$admin, $request){
+                    if (!is_null($admin)) {
+                        if(!Hash::check($request->password, $admin->password)){
+                            return $fail('Password salah.');
+                        }
+                    }
+                },
+            ]
+        ]);
+        Auth::guard('admin')->login($admin);
+        Auth::guard('admin')->user()->activities()->create([
+            'title'     => 'Masuk',
+            'content'   => 'Masuk pada website',
+            'user_type' => '1'
+        ]);
+        Auth::guard('admin')->user()->update([
+            'must_logout'           => date('Y-m-d H:i:s', strtotime('+'.config('app.lifetime', 1).' days')),
+            'aktivitas_terakhir'    => date('Y-m-d H:i:s'),
+            'api_token'             => bcrypt(date('Ymd').$admin->username.str_random())
+        ]);
+        // return Auth::guard('admin')->user();
+        return redirect('admin-menu');
     }
 
     public function logout(Request $r)
@@ -113,5 +101,10 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         return redirect('/');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        dd($user);
     }
 }

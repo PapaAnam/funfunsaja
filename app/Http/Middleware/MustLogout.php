@@ -16,6 +16,7 @@ class MustLogout
      */
     public function handle($request, Closure $next)
     {
+        // dd(1);
         $u = $request->user();
         if(!is_null($u)){
             if(Auth::guard('admin')->check()){

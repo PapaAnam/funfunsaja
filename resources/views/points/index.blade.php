@@ -34,7 +34,7 @@
 							<td>{{ $loop->iteration }}</td>
 							<td>{{ $n->point }}</td>
 							<td>
-								<a href="{{ route('contents.detail', [$n->content->kind->path, $n->content->url]) }}">{{ $n->content->short_title }}</a>
+								<a href="{{ $n->content->full_url }}">{{ $n->content->short_title }}</a>
 							</td>
 							<td>{{ $n->description }}</td>
 							<td>{{ $n->created_at }}</td>

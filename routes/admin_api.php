@@ -196,6 +196,12 @@ Route::middleware('admin_must_logout')->group(function(){
 			Route::get('/', 'ModerasiMasukanController@index');
 		});
 
+		# AKTIVITAS SALDO
+		Route::get('/aktivitas-saldo', 'AktivitasSaldoController@index');
+
+		# NOTIFIKASI
+		Route::get('/notifikasi', 'NotifikasiController@index');
+
 	});
 
 });

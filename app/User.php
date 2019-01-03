@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login', 'status_text','avatar_link'];
+    protected $appends = ['tgl_lhr', 'saldo_view', 'dibuat_pada', 'terakhir_login', 'status_text','avatar_link', 'balance_in_rp'];
     protected $casts = [
         'is_premium'    => 'boolean'
     ];
@@ -190,5 +190,10 @@ class User extends Authenticatable
     public function transaksiSaldo()
     {
         return $this->hasMany('App\DepositTransaction');
+    }
+
+    public function getBalanceInRpAttribute()
+    {
+        return number_format($this->balance, 0, ',', '.');
     }
 }

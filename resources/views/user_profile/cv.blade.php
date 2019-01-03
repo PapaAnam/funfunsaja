@@ -107,12 +107,20 @@
 		</center>
 		@else
 		@component('alert')
+		@if(Auth::guard('admin')->check())
+		Member belum melengkapi biografi
+		@else
 		Lengkapi biografi anda
+		@endif
 		@endcomponent
 		@endif
 		@else
 		@component('alert')
+		@if(Auth::guard('admin')->check())
+		Member belum melengkapi profil
+		@else
 		Lengkapi profil anda
+		@endif
 		@endcomponent
 		@endif
 	</div>

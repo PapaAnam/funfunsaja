@@ -14,7 +14,7 @@
 				{{ $comment->user->email }}
 				@endif
 				&nbsp;&nbsp;&nbsp;<small>{{ $comment->dibuat_pada }}</small> @if($comment->is_best)<span class="badge badge-primary">Terbaik</span>@endif
-				@if(Auth::id() == $content->user_id && !$comment->is_best)
+				@if(Auth::id() == $content->user_id && !$comment->is_best && $comment->user_id != Auth::id())
 				<form action="{{ url('/comments/set-best/'.$comment->id.'/'.$content->url) }}" method="post">
 					{{ csrf_field() }}
 					<button style="cursor: pointer;" type="submit" data-toggle="tooltip" title="Terbaik" class="btn btn-primary btn-sm float-right">

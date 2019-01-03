@@ -60,9 +60,9 @@
 						Ya
 					</span>
 					@else
-					<span class="badge badge-danger">
+					{{-- <span class="badge badge-danger">
 						Tidak
-					</span>
+					</span> --}}
 					@endif
 				</td>
 				<td>

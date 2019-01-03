@@ -10,6 +10,7 @@ use App\Notification;
 use App\Activity;
 use App\User;
 use Auth;
+use App\Admin\AktivitasSaldo;
 
 class DepositController extends Controller
 {
@@ -115,6 +116,12 @@ class DepositController extends Controller
 			'from_type'		=> '1',
 			'type'			=> $type
 		]);
+		$aktivitas = new AktivitasSaldo();
+		$aktivitas->admin_id    = Auth::guard('admin')->id();
+		$aktivitas->judul       = 'Beli Saldo';
+		$aktivitas->isi         = $r->status != 1 ? 'Penolakan pembelian saldo no tiket '.$depo->no_tiket.' sebesar Rp. '.rp($depo->deposit) : 'Persetujuan pembelian saldo no tiket '.$depo->no_tiket.' sebesar Rp. '.rp($depo->deposit);
+		$aktivitas->deposit_id 	= $depo->id;
+		$aktivitas->save();
 		return $r->status == 2 ? 'Pembelian saldo berhasil ditolak' : 'Pembelian saldo berhasil diterima';
 	}
 
@@ -150,6 +157,12 @@ class DepositController extends Controller
 				'to_id'=>$depo->user_id,
 				'type'=>'danger'
 			]);
+			$aktivitas = new AktivitasSaldo();
+			$aktivitas->admin_id    = Auth::guard('admin')->id();
+			$aktivitas->judul       = 'Ambil Saldo';
+			$aktivitas->isi         = 'Penolakan pengambilan saldo no tiket '.$depo->no_tiket.' sebesar Rp. '.rp($depo->deposit);
+			$aktivitas->deposit_id 	= $depo->id;
+			$aktivitas->save();
 		}else{
 			$depo->update([
 				'status'=>'Approve',
@@ -165,6 +178,12 @@ class DepositController extends Controller
 				'to_id'=>$depo->user_id,
 				'type'=>'success'
 			]);
+			$aktivitas = new AktivitasSaldo();
+			$aktivitas->admin_id    = Auth::guard('admin')->id();
+			$aktivitas->judul       = 'Ambil Saldo';
+			$aktivitas->isi         = 'Persetujuan pengambilan saldo no tiket '.$depo->no_tiket.' sebesar Rp. '.rp($depo->deposit);
+			$aktivitas->deposit_id 	= $depo->id;
+			$aktivitas->save();
 		}
 		return 'Pengambilan saldo berhasil '.($r->status == 2 ? 'ditolak' : 'diterima');
 	}

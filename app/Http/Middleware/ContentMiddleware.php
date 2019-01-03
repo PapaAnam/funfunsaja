@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Route;
 use App\Content;
+use Auth;
 
 class ContentMiddleware
 {
@@ -17,6 +18,8 @@ class ContentMiddleware
      */
     public function handle($r, Closure $next)
     {
+        if(Auth::guard('admin')->check())
+            return $next($r);
         $user = $r->user();
         $params     = Route::current()->parameters;
         $paramsName = Route::current()->parametersName;

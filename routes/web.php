@@ -82,3 +82,14 @@ Route::prefix('administrator')->group(function(){
 Route::get('/set-tentang', 'Admin\SettingController@setAbout');
 
 Route::get('/set-our-focus', 'Admin\SettingController@setOurFocus');
+
+Route::get('/keluar-admin', function(){
+	Auth::guard('admin')->logout();
+});
+
+Route::get('/administrator', 'AdministratorController@index');
+
+// Route::get('ll', function() {
+// 	dd(Auth::guard('admin')->check());
+//     return Auth::guard('admin')->user();
+// });

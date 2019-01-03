@@ -11,7 +11,7 @@
 				<th>Judul Masukan</th>
 				<th>Ditanggapi Pada</th>
 				<th>Status</th>
-				<th>Terbaik</th>
+				{{-- <th>Terbaik</th> --}}
 				<th>Aksi</th>
 			</tr>
 		</thead>
@@ -36,7 +36,7 @@
 					</span>
 					@endif
 				</td>
-				<td>
+				{{-- <td>
 					@if($c->is_best)
 					<span class="badge badge-primary">
 						Iya
@@ -46,7 +46,7 @@
 						Tidak
 					</span>
 					@endif
-				</td>
+				</td> --}}
 				<td>
 					@if($c->status !== '1')
 					<a class="btn btn-primary btn-sm" data-toggle="tooltip" title="Edit" href="{{ route('comments.feedback.edit', [$c->post->url, $c->id]) }}">

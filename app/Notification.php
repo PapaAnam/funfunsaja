@@ -7,6 +7,9 @@ use Auth;
 
 class Notification extends Model
 {
+
+    // 0 itu member
+
     protected $guarded = [];
 
     public function scopeMyNotifCount($q)
@@ -25,5 +28,15 @@ class Notification extends Model
     	$q->where('to_type', '0')->where('to_id', Auth::id())->update([
     		'status' => '1'
     	]);
+    }
+
+    public function scopeMember($q)
+    {
+        return $q->where('to_type', '0');
+    }
+
+    public function usermember()
+    {
+        return $this->belongsTo('App\User', 'to_id');
     }
 }
