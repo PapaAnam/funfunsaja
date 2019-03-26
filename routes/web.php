@@ -1,5 +1,10 @@
 <?php
 
+Route::get('/uji-coba-email',function(){
+	$aa = Mail::to('alevandro1602@gmail.com')->send(new App\Mail\UserRegistered(App\User::orderByRandom()->first()));
+	dd($aa);
+});
+
 // Route::get('/contoh-sms', function(){
 // 	$sms = App\Setting::sms();
 // 	$curl = curl_init();
